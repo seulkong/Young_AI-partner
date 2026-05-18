@@ -113,47 +113,59 @@
 
         <section id="flowchart">
             <h2>6. 전체 서비스 플로우 차트</h2>
-            <p>YOUNG리한 파트너의 서비스 작동 과정을 다이어그램으로 한눈에 확인해 보세요.</p>
+            <p>YOUNG리한 파트너의 서비스 작동 과정을 단계별로 한눈에 확인해 보세요.</p>
+            <p class="zoom-hint">💡 각 다이어그램을 클릭하면 확대해서 볼 수 있습니다.</p>
             
-            <p class="zoom-hint">💡 다이어그램을 클릭하면 확대해서 볼 수 있습니다.</p>
+            <h3>PHASE 1: 개인 맞춤 설문</h3>
             <div class="mermaid-container">
                 <div class="mermaid">
 graph TD
-    %% 1단계: 사용자 온보딩
-    subgraph Phase1 [PHASE 1: 개인 맞춤 설문]
+    subgraph Phase1 [1단계: 사용자 온보딩]
         A[앱 접속] --> B[맞춤형 설문 진행]
         B --> B1["성향 선택 (헬스/디저트/브랜드/트렌드)"]
         B --> B2["보유 정보 입력 (통신사/카드/학생여부)"]
     end
+                </div>
+            </div>
 
-    %% 2단계: 소비스타일 맞춤 인사말 
-    subgraph Phase2 [PHASE 2: 개인화 온보딩]
-        B1 & B2 --> C{소비 스타일 매칭}
+            <h3>PHASE 2: 개인화 온보딩</h3>
+            <div class="mermaid-container">
+                <div class="mermaid">
+graph TD
+    subgraph Phase2 [2단계: 소비스타일 맞춤 인사말]
+        B1["성향 선택"] & B2["보유 정보 입력"] --> C{소비 스타일 매칭}
         C -- Health --> D["🥗 헬시 모드 인사"]
         C -- Dessert --> E["🍰 디저트 모드 인사"]
         C -- Brand --> F["🏪 브랜드 모드 인사"]
         C -- Trend --> G["🔥 트렌드 모드 인사"]
     end
+                </div>
+            </div>
 
-    %% 3단계: AI 검색 및 계산 
-    subgraph Phase3 [PHASE 3: AI 기반 지능형 할인 계산 엔진]
+            <h3>PHASE 3: AI 기반 지능형 할인 계산 엔진</h3>
+            <div class="mermaid-container">
+                <div class="mermaid">
+graph TD
+    subgraph Phase3 [3단계: AI 검색 및 계산]
         H[사용자 상품 검색] --> I{실시간 데이터 조회}
         I --> J["1차: 편의점 행사 적용 (1+1, 2+1 등)"]
-
         J --> K{사용자 데이터 매칭}
-
         K --> L{대학생 전용 통신사 여부}
         L -- 가입자 --> L1["유쓰/0청년/Y박스 혜택 즉시 차감"]
         L -- 미가입자 --> L2["일반 통신사 멤버십 할인 적용"]
-
         K --> M{사용 카드 브랜드 확인}
         M -- 제휴카드 --> M1["카드사 청구/캐시백 혜택 계산"]
         M -- 미제휴 --> M2["혜택 계산 제외"]
     end
+                </div>
+            </div>
 
-    %% 4단계: 결과 도출 및 추천 
-    subgraph Phase4 [PHASE 4: 최종 응답]
-        L1 & L2 & M1 & M2 --> N[최종 혜택가 산출]
+            <h3>PHASE 4: 최종 응답</h3>
+            <div class="mermaid-container">
+                <div class="mermaid">
+graph TD
+    subgraph Phase4 [4단계: 결과 도출 및 추천]
+        L1["통신사 즉시 차감"] & L2["일반 멤버십 할인"] & M1["카드사 혜택 계산"] & M2["혜택 계산 제외"] --> N[최종 혜택가 산출]
         N --> O["상세 할인 내역 리스트업"]
         
         O --> P{학생 혜택 누락 확인}
@@ -162,10 +174,6 @@ graph TD
 
         Q & R --> S["📍 근처 편의점 찾기 (지도 연결)"]
     end
-
-    Phase1 --> Phase2
-    Phase2 --> Phase3
-    Phase3 --> Phase4
                 </div>
             </div>
 
