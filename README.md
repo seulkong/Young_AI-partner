@@ -3,6 +3,13 @@
 
 Young-AI 파트너는 복합적인 카드 혜택과 통신사 등급을 보유한 대학생들이 편의점에서 놓치기 쉬운 모든 혜택을 챙길 수 있도록 돕는 AI 기반 소비 추천 서비스입니다.
 
+
+
+  🔗 [YOUNG리한 파트너 바로가기](https://docs.google.com/document/d/1g4fRsMOPZje4a-I8DRZ7M0IpYzXZp23G-Lkrk5zAWRk/edit?usp=sharing)
+  
+  ✉️ [YOUNG리한 파트너 사용가이드 바로가기](https://docs.google.com/document/d/1g4fRsMOPZje4a-I8DRZ7M0IpYzXZp23G-Lkrk5zAWRk/edit?tab=t.0)
+
+
 ---
 
 ## 📌 프로젝트 개요
@@ -80,9 +87,4 @@ Young-AI 파트너는 복합적인 카드 혜택과 통신사 등급을 보유�
 3.  **AI 계산 엔진**: 실시간 행사 데이터 + 사용자 혜택 데이터 매칭
 4.  **최종 응답**: 최적가 산출, 상세 할인 내역 리스트업 및 근처 매장 안내
 
----
-
-  🔗 [YOUNG리한 파트너 바로가기](https://docs.google.com/document/d/1g4fRsMOPZje4a-I8DRZ7M0IpYzXZp23G-Lkrk5zAWRk/edit?usp=sharing)
-  
-  ✉️ [YOUNG리한 파트너 사용가이드 바로가기](https://docs.google.com/document/d/1g4fRsMOPZje4a-I8DRZ7M0IpYzXZp23G-Lkrk5zAWRk/edit?tab=t.0)
 
