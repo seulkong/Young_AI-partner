@@ -163,7 +163,9 @@ graph TD
         Q & R --> S["📍 근처 편의점 찾기 (지도 연결)"]
     end
 
-    Phase2 --> H
+    Phase1 --> Phase2
+    Phase2 --> Phase3
+    Phase3 --> Phase4
                 </div>
             </div>
 
@@ -184,6 +186,12 @@ graph TD
             </div>
         </section>
     </main>
+
+    <!-- Zoom Modal -->
+    <div id="imageModal" class="image-modal">
+        <span class="image-modal-close">&times;</span>
+        <div class="image-modal-content" id="modal-diagram-container"></div>
+    </div>
 
     <script>
         mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#f0f4ff', primaryBorderColor: '#4361ee', primaryTextColor: '#333' } });
@@ -229,11 +237,5 @@ graph TD
             }
         });
     </script>
-    
-    <!-- Zoom Modal -->
-    <div id="imageModal" class="image-modal">
-        <span class="image-modal-close">&times;</span>
-        <div class="image-modal-content" id="modal-diagram-container"></div>
-    </div>
 </body>
 </html>
