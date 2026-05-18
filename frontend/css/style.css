@@ -218,10 +218,35 @@ header h1 {
     color: var(--text-main);
 }
 
-#logoutButton {
+.header-buttons {
     position: absolute;
     top: 2rem;
     right: 2rem;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.guide-btn {
+    background: #f0f4ff;
+    color: var(--primary-color);
+    border: 1px solid #cce0ff;
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+}
+
+.guide-btn:hover {
+    background: var(--primary-color);
+    color: #fff;
+    text-decoration: none;
+}
+
+#logoutButton {
     background: #fff0f0;
     color: #ff4d4d;
     border: 1px solid #ffcccc;
