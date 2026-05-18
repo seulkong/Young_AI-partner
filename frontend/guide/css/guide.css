@@ -169,10 +169,10 @@ li {
 }
 
 .zoom-hint {
-    text-align: center;
+    text-align: left;
     color: #868e96;
-    font-size: 0.9rem;
-    margin-top: -1.5rem;
+    font-size: 0.95rem;
+    margin-top: -0.5rem;
     margin-bottom: 2rem;
 }
 
