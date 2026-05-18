@@ -34,9 +34,9 @@ Young-AI 파트너는 복합적인 카드 혜택과 통신사 등급을 보유�
 
 ---
 
-## ⚙️ 핵심 로직 (Core Logic)
+## ⚙️ 핵심 로직 
 
-1. **데이터 수집 파이프라인 (Data Pipeline)**
+1. **데이터 수집 파이프라인**
    - `crawler` 스크립트가 주기적으로 편의점(GS25, CU)의 프로모션(1+1, 2+1 등) 데이터를 수집하여 JSON 형태로 자동 구축합니다.
 2. **할인 가격 역산출 알고리즘**
    - 사용자가 상품을 검색할 때 **기본 행사 할인(1+1 등) -> 통신사 멤버십 할인 -> 신용/체크카드 제휴 할인** 순서로 단계별 중복 할인을 계산합니다.
@@ -46,7 +46,7 @@ Young-AI 파트너는 복합적인 카드 혜택과 통신사 등급을 보유�
 
 ---
 
-## 📁 프로젝트 폴더 구조 (Directory Structure)
+## 📁 프로젝트 폴더 구조 
 
 ```text
 ├── frontend/    # 사용자 UI (HTML, CSS, JS) 및 챗봇 인터페이스 화면
@@ -59,7 +59,7 @@ Young-AI 파트너는 복합적인 카드 혜택과 통신사 등급을 보유�
 
 ---
 
-## 🛠 기술 스택 (Tech Stack)
+## 🛠 사용한 기술 스택 
 
 ### Language & Environment
 * **Language**: Python 3.x, HTML/CSS/JavaScript
@@ -82,6 +82,7 @@ Young-AI 파트너는 복합적인 카드 혜택과 통신사 등급을 보유�
 
 ---
 
-## 📝 향후 업데이트 계획
-* PostgreSQL 및 SQLAlchemy를 활용한 DB 정식 연동 및 안정화
-* 대학생 전용 특화 혜택 추천 알고리즘 고도화
+  🔗 [YOUNG리한 파트너 바로가기](https://docs.google.com/document/d/1g4fRsMOPZje4a-I8DRZ7M0IpYzXZp23G-Lkrk5zAWRk/edit?usp=sharing)
+  
+  ✉️ [YOUNG리한 파트너 사용가이드 바로가기](https://docs.google.com/document/d/1g4fRsMOPZje4a-I8DRZ7M0IpYzXZp23G-Lkrk5zAWRk/edit?tab=t.0)
+
