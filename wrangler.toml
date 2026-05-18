@@ -1,10 +1,9 @@
 name = "ai-budget-mate-api"
-main = "api_server.py"
+main = "backend/api_server.py"
 compatibility_date = "2024-04-03"
 compatibility_flags = ["python_workers"]
 
-# 파이썬 지원 활성화
-[python]
+# 파이썬 지원 활성화는 compatibility_flags로 처리됩니다.
 
 # D1 데이터베이스 설정 (회원 정보용)
 [[d1_databases]]

@@ -14,12 +14,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('userName2').textContent = loggedInUser.name || "사용자";
 
         const cardData = {
-            '신한카드': ['Mr.Life (미스터 라이프)', 'Deep On Platinum+'],
-            'KB국민카드': ['노리2 체크카드 (KB Pay)', '카카오뱅크 KB국민카드', '나라사랑카드'],
+            '신한카드': ['Mr.Life (미스터 라이프)', 'Deep On Platinum+', '신한 S20 체크', '신한 YOLO 온'],
+            'KB국민카드': ['노리2 체크카드 (KB Pay)', '카카오뱅크 KB국민카드', '나라사랑카드', 'KB국민 노리 체크'],
             '삼성카드': ['삼성 iD ON 카드', '삼성 iD SIMPLE 카드'],
             '현대카드': ['현대카드 Z work Edition2'],
             '롯데카드': ['LOCA LIKIT Shop'],
-            '우리카드': ['D4 카드의정석 Ⅱ'],
+            '우리카드': ['D4 카드의정석 Ⅱ', '우리 스무살우리', '우리카드 우리V체크'],
             '하나카드': ['# MY WAY 카드'],
             '카카오뱅크': ['프렌즈 체크카드'],
             'NH농협카드': ['zgm.play 카드'],
@@ -56,8 +56,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const storeEl = surveyForm.querySelector('input[name="store"]:checked');
                 const carrierEl = surveyForm.querySelector('input[name="carrier"]:checked');
                 const tierEl = surveyForm.querySelector('input[name="carrier_tier"]:checked');
+                const studentTelEl = surveyForm.querySelector('input[name="student_telecom"]:checked');
 
-                if (!storeEl || !carrierEl || !tierEl) {
+                if (!storeEl || !carrierEl || !tierEl || !studentTelEl) {
                     alert("모든 설문 항목에 답해 주세요!");
                     return;
                 }
@@ -65,6 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const store = storeEl.value;
                 const carrier = carrierEl.value;
                 const carrier_tier = tierEl.value;
+                const is_student_telecom = studentTelEl.value === 'yes';
                 let card = 'none';
                 if (cardIssuerSelect.value !== 'none' && cardIssuerSelect.value !== '') {
                     card = cardNameSelect.value || 'none';
@@ -74,6 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loggedInUser.store = store;
                 loggedInUser.carrier = carrier;
                 loggedInUser.carrier_tier = carrier_tier;
+                loggedInUser.is_student_telecom = is_student_telecom;
                 loggedInUser.card = card;
                 
                 localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));

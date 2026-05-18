@@ -244,6 +244,7 @@ function sendMessage() {
             user_store: loggedInUser.store || 'GS25',
             user_telecom: loggedInUser.carrier || 'none',
             user_telecom_tier: loggedInUser.carrier_tier || 'none',
+            user_is_student_telecom: loggedInUser.is_student_telecom || false,
             user_card: loggedInUser.card || 'none'
         }),
     })
@@ -300,17 +301,17 @@ function sendMessage() {
             const mapLinkBtn = document.createElement('button');
             mapLinkBtn.textContent = `📍 근처 ${data.shop} 찾기`;
             mapLinkBtn.className = 'map-link-btn';
-            mapLinkBtn.style.margin = '10px 10px 20px 10px';
-            mapLinkBtn.style.padding = '10px 20px';
+            mapLinkBtn.style.margin = '5px 10px 15px 10px';
+            mapLinkBtn.style.padding = '6px 14px';
             mapLinkBtn.style.backgroundColor = '#28a745';
             mapLinkBtn.style.color = 'white';
             mapLinkBtn.style.border = 'none';
-            mapLinkBtn.style.borderRadius = '25px';
+            mapLinkBtn.style.borderRadius = '20px';
             mapLinkBtn.style.cursor = 'pointer';
-            mapLinkBtn.style.fontWeight = 'bold';
-            mapLinkBtn.style.fontSize = '0.95em';
+            mapLinkBtn.style.fontWeight = '600';
+            mapLinkBtn.style.fontSize = '0.8em';
             mapLinkBtn.style.transition = 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)';
-            mapLinkBtn.style.boxShadow = '0 4px 12px rgba(40, 167, 69, 0.3)';
+            mapLinkBtn.style.boxShadow = '0 2px 6px rgba(40, 167, 69, 0.2)';
             
             mapLinkBtn.onmouseover = () => {
                 mapLinkBtn.style.transform = 'translateY(-2px)';
@@ -347,66 +348,71 @@ function sendMessage() {
                 const gs25Col = Array.from(document.querySelectorAll('.store-column')).find(el => el.querySelector('#gs25-list'));
                 const cuCol = Array.from(document.querySelectorAll('.store-column')).find(el => el.querySelector('#cu-list'));
                 const container = document.querySelector('.store-list-container');
+                // const mapTab = document.getElementById('Map'); // 중복 선언 제거
                 
                 if (container) {
                     container.style.display = 'flex';
-                    container.style.flexDirection = 'column'; // 필터링 시에는 세로로 크게 보기
+                    container.style.gap = '0';
                 }
                 
-                if (data.shop === 'GS25') {
-                    if (gs25Col) {
-                        gs25Col.style.display = 'block';
-                        gs25Col.style.width = '100%';
-                        gs25Col.style.border = '2px solid #007bff';
-                        gs25Col.style.borderRadius = '15px';
-                        gs25Col.style.padding = '15px';
-                        gs25Col.style.marginBottom = '20px';
+                const applyFilterStyle = (col) => {
+                    if (col) {
+                        col.style.display = 'block';
+                        col.style.flex = '1 0 100%';
+                        col.style.width = '100%';
+                        col.style.border = '2px solid #007bff';
+                        col.style.borderRadius = '15px';
+                        col.style.padding = '15px';
+                        col.style.boxSizing = 'border-box';
+                        col.style.margin = '0';
                     }
+                };
+
+                if (data.shop === 'GS25') {
+                    applyFilterStyle(gs25Col);
                     if (cuCol) cuCol.style.display = 'none';
                 } else if (data.shop === 'CU') {
-                    if (cuCol) {
-                        cuCol.style.display = 'block';
-                        cuCol.style.width = '100%';
-                        cuCol.style.border = '2px solid #007bff';
-                        cuCol.style.borderRadius = '15px';
-                        cuCol.style.padding = '15px';
-                        cuCol.style.marginBottom = '20px';
-                    }
+                    applyFilterStyle(cuCol);
                     if (gs25Col) gs25Col.style.display = 'none';
                 }
                 
-                // 필터 초기화 버튼 추가 (작고 깔끔한 디자인으로 변경)
+                // 필터 초기화 버튼 추가
                 let resetBtn = document.getElementById('filterResetBtn');
                 if (!resetBtn) {
                     resetBtn = document.createElement('button');
                     resetBtn.id = 'filterResetBtn';
-                    resetBtn.textContent = '🔄 모든 편의점 다시 보기';
+                    resetBtn.textContent = '🔄 전체 편의점 다시 보기';
                     resetBtn.style.display = 'block';
                     resetBtn.style.margin = '20px auto';
-                    resetBtn.style.padding = '12px 24px';
-                    resetBtn.style.backgroundColor = '#007bff';
-                    resetBtn.style.color = 'white';
-                    resetBtn.style.border = 'none';
-                    resetBtn.style.borderRadius = '30px';
+                    resetBtn.style.padding = '10px 25px';
+                    resetBtn.style.backgroundColor = 'white';
+                    resetBtn.style.color = '#007bff';
+                    resetBtn.style.border = '1px solid #007bff';
+                    resetBtn.style.borderRadius = '25px';
                     resetBtn.style.cursor = 'pointer';
                     resetBtn.style.fontWeight = 'bold';
-                    resetBtn.style.boxShadow = '0 4px 15px rgba(0, 123, 255, 0.3)';
+                    resetBtn.style.fontSize = '0.9em';
                     
                     resetBtn.onclick = () => {
-                        if (container) container.style.flexDirection = 'row';
+                        if (container) {
+                            container.style.display = 'flex';
+                            container.style.gap = '20px';
+                        }
                         if (gs25Col) {
                             gs25Col.style.display = 'block';
+                            gs25Col.style.flex = '1';
                             gs25Col.style.border = 'none';
-                            gs25Col.style.width = '50%';
+                            gs25Col.style.width = 'auto';
                         }
                         if (cuCol) {
                             cuCol.style.display = 'block';
+                            cuCol.style.flex = '1';
                             cuCol.style.border = 'none';
-                            cuCol.style.width = '50%';
+                            cuCol.style.width = 'auto';
                         }
                         resetBtn.remove();
                     };
-                    container.parentNode.appendChild(resetBtn);
+                    mapTab.appendChild(resetBtn);
                 }
             };
             
@@ -425,8 +431,39 @@ function sendMessage() {
     });
 }
 
+// 탭 전환 함수 (전역)
+window.openTab = function(evt, tabName) {
+    const tabContents = document.getElementsByClassName("tab-content");
+    for (let i = 0; i < tabContents.length; i++) {
+        tabContents[i].style.display = "none";
+    }
+    const tabLinks = document.getElementsByClassName("tab-link");
+    for (let i = 0; i < tabLinks.length; i++) {
+        tabLinks[i].className = tabLinks[i].className.replace(" active", "");
+    }
+    document.getElementById(tabName).style.display = "block";
+    if (evt) evt.currentTarget.className += " active";
+};
+
 // 페이지 로드 시 실행
 document.addEventListener('DOMContentLoaded', () => {
+    // 1. 초기 뷰 설정 (챗봇 강제 활성화 및 탭 메뉴 숨김)
+    const chatbotTab = document.getElementById('Chatbot');
+    const mapTab = document.getElementById('Map');
+    const tabMenu = document.querySelector('.tab-menu');
+    
+    if (chatbotTab) {
+        chatbotTab.style.display = 'block';
+        chatbotTab.classList.add('active');
+    }
+    if (mapTab) {
+        mapTab.style.display = 'none';
+        mapTab.classList.remove('active');
+    }
+    if (tabMenu) {
+        tabMenu.style.display = 'none';
+    }
+
     // 로그인 상태 확인
     const loggedInUserStr = localStorage.getItem('loggedInUser');
     if (!loggedInUserStr) {
@@ -434,9 +471,27 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
     }
     const loggedInUser = JSON.parse(loggedInUserStr);
-    document.getElementById('homeUserName').textContent = loggedInUser.name;
+    
+    // 헤더 및 슬로건 분리 업데이트 (헤더 깨짐 방지)
+    const headerH1 = document.querySelector('header h1');
+    if (headerH1) {
+        headerH1.innerHTML = `<span style="font-weight: 800; color: #007bff;">${loggedInUser.name}</span>님, 환영합니다!`;
+        
+        // 슬로건을 h1 아래에 서브 텍스트로 추가
+        let slogan = document.getElementById('headerSlogan');
+        if (!slogan) {
+            slogan = document.createElement('p');
+            slogan.id = 'headerSlogan';
+            slogan.style.fontSize = '0.85em';
+            slogan.style.color = '#666';
+            slogan.style.marginTop = '5px';
+            slogan.style.fontWeight = '500';
+            slogan.textContent = '"대학생의 소비를 영(Young)리하게 돕는 AI 파트너" Young-AI 파트너 입니다. 🎓';
+            headerH1.after(slogan);
+        }
+    }
 
-    let greetingMsg = `안녕하세요, ${loggedInUser.name}님! 원하시는 편의점 상품을 입력해 주시면 최적의 구매 방법을 찾아드릴게요. (예: 오레오씬즈화이트, 우유)`;
+    let greetingMsg = `${loggedInUser.name}님, 환영합니다! "대학생의 소비를 영(Young)리하게 돕는 AI 파트너" Young-AI 파트너 입니다. 🎓`;
     if (loggedInUser.style === 'health') {
         greetingMsg = `안녕하세요! 건강과 맛을 모두 챙기시는군요. 칼로리는 낮고 영양은 빵빵한 헬스케어 상품 위주로 추천해 드릴게요!`;
     } else if (loggedInUser.style === 'dessert') {
@@ -458,6 +513,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // 작성 가이드 추가
     greetingMsg += `<br><br>[작성 가이드]<br>1. '우유', '라면'처럼 상품의 종류를 입력하시면 행사 중인 전체 리스트를 보여드려요.<br>2. '오레오씬즈화이트', '신라면'처럼 특정 상품명을 입력하시면 가장 저렴하게 살 수 있는 최적의 할인 조합을 즉시 찾아드립니다!`;
     greetingMsg += `<br>3. '추천해줘' 혹은 '요즘 핫한 거 뭐야?'라고 채팅해서 ${guideStyle} 상품들을 추천받아보세요!`;
+    greetingMsg += `<br>4. 결과 하단의 '📍 근처 편의점 찾기' 버튼을 누르면 지금 바로 살 수 있는 주변 매장을 지도로 보여드려요!`;
+    greetingMsg += `<br>5. '대학생 혜택 보여줘'라고 입력하시면 대학생만 받을 수 있는 쏠쏠한 카드/통신사 혜택을 한눈에 정리해 드립니다! 🎓`;
     
     // HTML에 하드코딩된 인사말 교체
     const initialBotMessage = document.querySelector('.chat-window .bot-message');

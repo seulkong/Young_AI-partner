@@ -1,0 +1,4 @@
+﻿Name,Key_Benefit,Target_Spending,Optimization_Factor
+SKT 0청년 (0 day),"편의점 50% 할인쿠폰, 커피/영화 50% 할인","편의점, 커피, 영화",Date_Specific_10_20_30
+KT Y (Y박스),"편의점 1+1 및 모바일 상품권, 데이터 2배","편의점, 데이터",App_Inventory
+LG U+ 유쓰 (Uth),"20일 유쓰데이 간식 무료, 편의점 10% 할인","무료간식, 편의점",Monthly_20th_Event

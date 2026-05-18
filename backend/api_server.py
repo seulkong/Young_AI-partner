@@ -1,4 +1,6 @@
 import json
+import csv
+import io
 from js import Response, Headers, Object
 
 async def on_fetch(request, env):
@@ -27,7 +29,21 @@ async def on_fetch(request, env):
             user_store = data.get("user_store", "GS25")
             user_telecom = str(data.get("user_telecom", "none")).upper().strip()
             user_telecom_tier = str(data.get("user_telecom_tier", "low")).lower().strip()
+            user_is_student_telecom = data.get("user_is_student_telecom", False)
             user_card = str(data.get("user_card", "none")).strip()
+
+            # 대학생 전용 혜택 리스트업 로직
+            if "대학생" in item_name and "혜택" in item_name:
+                std_msg = "🎓 **대학생이라면 꼭 챙겨야 할 편의점 알짜 혜택 리스트!**\n\n"
+                std_msg += "[통신사 멤버십]\n"
+                std_msg += "• SKT: 0청년 요금제 (0 day 50% 할인 쿠폰 등)\n"
+                std_msg += "• KT: Y박스 (편의점 1+1 및 모바일 상품권)\n"
+                std_msg += "• LG U+: 유쓰(Uth) (20일 유쓰데이 간식 무료, 편의점 10% 할인)\n\n"
+                std_msg += "[추천 카드]\n"
+                std_msg += "• 신한 S20 체크: GS25 7% 캐시백\n"
+                std_msg += "• KB국민 노리 체크: 편의점 5% 환급 할인\n"
+                std_msg += "• 우리카드 우리V체크: 편의점 추가 적립\n\n"
+                return Response.new(json.dumps({"type": "result", "message": std_msg, "shop": "편의점"}), headers=headers)
 
             crawling_raw = await env.CRAWLING_KV.get("crawling_result.json")
             crawling_data = json.loads(crawling_raw) if crawling_raw else []
@@ -45,6 +61,7 @@ async def on_fetch(request, env):
                     style_keywords = {
                         'health': ['닭가슴살', '프로틴', '단백질', '제로', '슈거', '샐러드', '견과', '계란', '반숙', '두유', '곤약', '비타민', '생수'],
                         'dessert': ['초코', '쿠키', '케이크', '푸딩', '마카롱', '젤리', '구미', '사탕', '캔디', '아이스크림', '달콤'],
+                        'brand': ['유어스', '헤이루', '득템', '리얼프라이스', 'PB', '전용', '차별화', '단독'],
                         'trend': ['마라', '요아정', '두바이', '신상', '대란', '인기', '불닭', '치즈']
                     }
                     kws = style_keywords.get(user_style, [])
@@ -92,55 +109,119 @@ async def on_fetch(request, env):
             try:
                 telecom_raw = await env.CRAWLING_KV.get("Telecom.csv")
                 if telecom_raw and user_telecom != 'NONE':
-                    import csv, io
+                    if telecom_raw.startswith('\ufeff'): telecom_raw = telecom_raw[1:]
                     f = io.StringIO(telecom_raw)
-                    tel_reader = list(csv.DictReader(f))
+                    tel_reader = csv.DictReader(f)
                     for row in tel_reader:
-                        if row['Telecom'].upper() == user_telecom and row['Shop'].upper() == shop:
-                            val_str = row['Discount_VIP'] if 'high' in user_telecom_tier else row['Discount_Normal']
-                            if '%' in val_str:
-                                pct = int(val_str.replace('%', '').strip())
-                                amt = int(final_price * (pct / 100))
+                        row = {k.strip(): v for k, v in row.items() if k}
+                        # provider: SKT, KT, LG U+
+                        # partner_cvs: GS25, CU, 7-Eleven
+                        if row.get('provider', '').upper() == user_telecom and shop in row.get('partner_cvs', '').upper():
+                            is_high_tier = 'high' in user_telecom_tier or 'vip' in user_telecom_tier or 'vvip' in user_telecom_tier
+                            row_tier = row.get('tier', '').upper()
+                            tier_match = False
+                            if is_high_tier and any(t in row_tier for t in ['VIP', 'GOLD', 'VVIP']): tier_match = True
+                            if not is_high_tier and any(t in row_tier for t in ['SILVER', 'GENERAL', 'NORMAL']): tier_match = True
+                            
+                            if tier_match:
+                                disc_rate = float(row.get('discount_rate', '0'))
+                                amt = int(final_price * disc_rate)
                                 final_price -= amt
-                                discount_details.append(f"• [통신사] {user_telecom} 멤버십 {pct}% 할인 (-{amt:,}원)")
-                            elif '원' in val_str:
-                                amt = int(val_str.replace('원', '').replace(',', '').strip())
-                                final_price -= amt
-                                discount_details.append(f"• [통신사] {user_telecom} 멤버십 할인 (-{amt:,}원)")
-                            telecom_applied = True
-                            break
-            except: pass
+                                discount_details.append(f"• [통신사] {user_telecom} 멤버십 {int(disc_rate*100)}% 할인 (-{amt:,}원)")
+                                telecom_applied = True
+                                break
+                
+                # 대학생 전용 멤버십 추가 혜택 (가정: 대학생 타겟 서비스이므로 추가 적용)
+                if user_is_student_telecom:
+                    if user_telecom == 'SKT':
+                        # 0청년 (50% 할인 쿠폰 등)
+                        discount_details.append("• [대학생] SKT 0청년 멤버십 혜택 (최대 50% 할인 가능)")
+                    elif user_telecom == 'KT':
+                        # Y박스 (1+1 등)
+                        discount_details.append("• [대학생] KT Y박스 전용 1+1 및 모바일 상품권 혜택")
+                    elif user_telecom == 'LG U+':
+                        # 유쓰 (10% 할인)
+                        std_amt = int(final_price * 0.1)
+                        final_price -= std_amt
+                        discount_details.append(f"• [대학생] LG U+ 유쓰(Uth) 10% 추가 할인 (-{std_amt:,}원)")
+                        telecom_applied = True
+            except Exception as e:
+                print(f"Telecom error: {e}")
 
             if not telecom_applied:
                 if user_telecom == 'NONE': discount_details.append("• [통신사] 등록된 멤버십 없음")
                 else: discount_details.append(f"• [통신사] {user_telecom}는 {shop} 제휴사가 아님")
 
             card_applied = False
-            gs_cards = ['삼성', '국민', 'KB', 'GS', '팝']
-            cu_cards = ['신한', '우리', '하나']
-            if (shop == 'GS25' and any(c in user_card for c in gs_cards)) or (shop == 'CU' and any(c in user_card for c in cu_cards)):
-                card_disc = int(final_price * 0.1)
+            # 제휴 카드사 키워드 확대
+            benefit_cards = {
+                'GS25': ['삼성', '국민', 'KB', 'GS', '팝', '현대', '롯데', '우리', '하나', 'NH', '농협', '카카오뱅크'],
+                'CU': ['신한', '우리', '하나', '국민', 'KB', '현대', '롯데', 'NH', '농협', '카카오뱅크']
+            }
+            
+            target_brands_kws = benefit_cards.get(shop, [])
+            if any(c in user_card for c in target_brands_kws):
+                card_disc = int(final_price * 0.1) # 기본 10% 가정
                 final_price -= card_disc
-                discount_details.append(f"• [카드] {user_card} 제휴 10% 추가 할인 (-{card_disc:,}원)")
+                discount_details.append(f"• [카드] {user_card} 제휴 약 10% 추가 할인 (-{card_disc:,}원)")
                 card_applied = True
             else:
-                discount_details.append(f"• [카드] {user_card if user_card != 'none' else '등록 카드'} 혜택 없음")
+                if user_card != 'none':
+                    discount_details.append(f"• [카드] {user_card}는 {shop} 제휴 혜택을 찾지 못했어요.")
+                else:
+                    discount_details.append(f"• [카드] 등록된 카드 없음")
+
+            # 대학생 전용 카드 혜택 추가 적용
+            student_card_applied = False
+            if "신한 S20 체크" in user_card and shop == "GS25":
+                std_card_disc = int(final_price * 0.07)
+                final_price -= std_card_disc
+                discount_details.append(f"• [대학생] {user_card} GS25 7% 캐시백 혜택 (-{std_card_disc:,}원)")
+                student_card_applied = True
+            elif "우리V체크" in user_card:
+                discount_details.append(f"• [대학생] {user_card} 편의점 추가 적립 혜택 적용")
+                student_card_applied = True
 
             card_recommendation = ""
-            if not card_applied:
+            # 대학생용 카드/멤버십 추천 멘트 생성 (대학생 가정)
+            student_recommendations = []
+            if not user_is_student_telecom:
+                if user_telecom == 'SKT': student_recommendations.append("SKT 0청년")
+                elif user_telecom == 'KT': student_recommendations.append("KT Y(Y박스)")
+                elif user_telecom == 'LG U+': student_recommendations.append("LG U+ 유쓰")
+            
+            if not student_card_applied:
+                if shop == "GS25": student_recommendations.append("신한 S20 체크(GS25 7% 할인)")
+                student_recommendations.append("우리카드 우리V체크")
+
+            if student_recommendations:
+                card_recommendation += f"🎓 대학생이신가요? {', '.join(student_recommendations[:2])}을 사용하시면 더 큰 혜택을 받을 수 있어요!\n"
+
+            if not card_applied and not student_card_applied:
                 try:
                     card_csv_raw = await env.CRAWLING_KV.get("Card.csv")
                     if card_csv_raw:
-                        import csv, io
+                        if card_csv_raw.startswith('\ufeff'): card_csv_raw = card_csv_raw[1:]
                         f = io.StringIO(card_csv_raw)
-                        card_reader = list(csv.DictReader(f))
+                        card_reader = csv.DictReader(f)
                         for row in card_reader:
-                            if (shop == 'GS25' and row['Issuer'] in ['삼성카드', 'KB국민카드']) or (shop == 'CU' and row['Issuer'] in ['신한카드', '우리카드']):
-                                card_recommendation = f"꿀팁! '{row['Card_Name']}'를 쓰시면 {shop}에서 {row['Benefit']} 혜택을 더 받을 수 있어요!"
+                            row = {k.strip(): v for k, v in row.items() if k}
+                            target_brands = row.get('Target_Brands', '')
+                            # 해당 편의점 브랜드 혹은 '주요 편의점' 포함 여부 확인
+                            if shop in target_brands or '주요 편의점' in target_brands:
+                                benefit = row.get('Benefit_Details', '할인 혜택')
+                                card_recommendation += f"\n💡 {shop} 꿀팁! '{row.get('Card_Name')}' ({row.get('Issuer')})를 쓰시면 {benefit} 혜택을 받을 수 있어요!"
                                 break
-                except: pass
+                except Exception as e:
+                    print(f"Card error: {e}")
 
-            msg = f"'{best_item['name']}' ({shop}) 최적의 할인 조합입니다!\n\n"
+            msg = f"'{best_item['name']}' ({shop}) 최적의 할인 조합입니다!\n"
+            
+            # 선호 편의점과 결과 편의점이 다를 경우 안내 멘트 추가
+            if user_store != 'none' and user_store.upper() != shop.upper():
+                msg += f"💡 선호하시는 {user_store}보다 {shop}에서 더 좋은 혜택이 있어 추천해 드려요!\n"
+            
+            msg += "\n"
             msg += f"기본 가격: {base_price:,}원\n"
             if discount_details:
                 msg += "\n[적용된 할인 혜택]\n" + "\n".join(discount_details) + "\n"
