@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUNG리한 파트너 사용 가이드</title>
+    <link rel="stylesheet" href="css/guide.css">
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+</head>
+<body>
+    <nav class="sidebar">
+        <h2>📑 목차</h2>
+        <ul>
+            <li><a href="#intro">1. 서비스 소개</a></li>
+            <li><a href="#onboarding">2. 시작하기 및 맞춤형 설문</a></li>
+            <li><a href="#chatbot">3. 메인 챗봇 창</a></li>
+            <li><a href="#chat-manual">4. 챗봇 대응 멘트 매뉴얼</a></li>
+            <li><a href="#keywords">5. 소비 스타일별 추천 키워드</a></li>
+            <li><a href="#flowchart">6. 전체 서비스 플로우 차트</a></li>
+        </ul>
+    </nav>
+
+    <main class="main-content">
+        <a href="../home.html" class="back-btn">⬅ 서비스로 돌아가기</a>
+
+        <div class="guide-header">
+            <h1>YOUNG리한 파트너 사용 가이드</h1>
+            <p>가장 합리적인 구매 방법을 추천해 주는 AI 기반 소비 파트너</p>
+        </div>
+
+        <section id="intro">
+            <h2>1. 서비스 소개</h2>
+            <p>안녕하세요. <strong>YOUNG리한 파트너</strong>입니다.</p>
+            <p>저희 서비스는 단순한 가격 비교 서비스가 아니라, 다양한 상품행사와 제휴혜택이 있는 편의점을 중심으로 <strong>대학생의 소비 스타일과 결제 수단 및 보유 중인 할인혜택 데이터들을 복합적으로 고려해 가장 합리적인 구매 방법을 추천</strong>해 주는 'AI 기반 소비 파트너' 서비스입니다.</p>
+        </section>
+
+        <section id="onboarding">
+            <h2>2. 시작하기 및 맞춤형 설문</h2>
+            <p>서비스에 처음 접속하면 다음과 같은 설문을 통해 사용자 맞춤형 추천 환경을 구성합니다.</p>
+            
+            <h3>사용자 이름 및 소비 스타일 선택</h3>
+            <p>입력된 소비 스타일에 따라 챗봇의 첫인사와 추천 상품이 달라집니다.</p>
+
+            <h3>맞춤형 추천을 위한 세부 설문</h3>
+            <ul>
+                <li><strong>자주 가는 편의점 선택:</strong> CU, GS25</li>
+                <li><strong>통신사 선택:</strong> KT, SKT, LG U+</li>
+                <li><strong>통신사 멤버십 등급:</strong> VVIP / VIP / Gold / 일반 / Silver</li>
+                <li><strong>대학생 전용 멤버십 여부:</strong> 0청년, Y박스, 유쓰 등 가입 여부</li>
+                <li><strong>주로 결제하는 카드사:</strong> 카드사 선택 ➔ 세부 카드 선택</li>
+            </ul>
+        </section>
+
+        <section id="chatbot">
+            <h2>3. 메인 챗봇 창</h2>
+            
+            <h3>소비 스타일에 따른 맞춤 인사말</h3>
+            <div class="example-box">
+                <p><strong>[헬스케어] 선택 시:</strong><br> "안녕하세요! 건강과 맛을 모두 챙기시는군요. 칼로리는 낮고 영양은 빵빵한 헬스케어 상품 위주로 추천해 드릴게요! 💪"</p>
+            </div>
+            <div class="example-box">
+                <p><strong>[디저트] 선택 시:</strong><br> "안녕하세요! 달콤한 휴식이 필요하신가요? 보기만 해도 기분 좋아지는 편의점 디저트와 달달한 간식들을 찾아드릴게요! 🍰"</p>
+            </div>
+
+            <h3>작성 가이드 안내</h3>
+            <ul>
+                <li><strong>종류 검색:</strong> '우유', '라면'처럼 상품의 종류를 입력하면 행사 중인 리스트 제공</li>
+                <li><strong>정확한 검색:</strong> '오레오씬즈화이트'처럼 상품명을 입력하면 최적의 할인 조합 산출</li>
+                <li><strong>추천 검색:</strong> '추천해줘' 입력 시 성향에 맞는 상품 추천</li>
+                <li><strong>지도 연동:</strong> 결과 하단의 '📍 근처 편의점 찾기' 버튼 클릭</li>
+                <li><strong>대학생 혜택:</strong> '대학생 혜택 보여줘' 입력 시 카드/통신사 혜택 가이드</li>
+            </ul>
+        </section>
+
+        <section id="chat-manual">
+            <h2>4. 챗봇 대응 멘트 매뉴얼</h2>
+
+            <h3>단일 상품 매칭 (특정 상품명 입력)</h3>
+            <p>할인혜택(편의점 행사, 통신사, 카드)을 역산출하여 <strong>최종 혜택가</strong>를 알려줍니다. 할인이 적용 안 되는 카드를 가졌거나 혜택 카드가 없을 경우, 추가 혜택 카드를 추천해 줍니다.</p>
+            <div class="example-box">
+                <p>💡 선호하시는 CU보다 GS25에서 더 좋은 혜택이 있어 추천해 드려요!</p>
+                <p>💡 GS25 꿀팁! '신한 S20 체크' (신한카드)를 쓰시면 캐시백 혜택을 받을 수 있어요!</p>
+                <p>🎓 대학생이신가요? LG U+ 유쓰, 신한 S20 체크를 사용하시면 더 큰 혜택을 받을 수 있어요!</p>
+            </div>
+
+            <h3>여러 상품 매칭 (종류 입력)</h3>
+            <p>'우유' 등 포괄적인 단어 검색 시 최대 15개의 선택지 리스트를 제공합니다.</p>
+            
+            <h3>결과 없음 (매칭 실패)</h3>
+            <p>행사 중이지 않은 상품일 경우 "아쉽게도 '{상품명}' 상품은 현재 행사 중이 아니에요." 라고 안내합니다.</p>
+
+            <h3>대학생 전용 혜택 가이드</h3>
+            <p>'대학생 혜택 보여줘' 입력 시 SKT 0청년, KT Y박스, LG U+ 유쓰 멤버십과 특화 혜택 카드(신한 S20 체크 등)를 정리하여 안내합니다.</p>
+        </section>
+
+        <section id="keywords">
+            <h2>5. 소비 스타일별 추천 키워드</h2>
+            <p>챗봇이 상품을 자동 추천할 때 사용하는 키워드 리스트입니다.</p>
+            
+            <p><strong>💪 헬스/건강:</strong> 
+                <span class="keyword-badge">닭가슴살</span><span class="keyword-badge">프로틴</span><span class="keyword-badge">단백질</span><span class="keyword-badge">제로</span><span class="keyword-badge">샐러드</span><span class="keyword-badge">곤약</span>
+            </p>
+            <p><strong>🍰 디저트/달콤:</strong> 
+                <span class="keyword-badge">초코</span><span class="keyword-badge">쿠키</span><span class="keyword-badge">케이크</span><span class="keyword-badge">푸딩</span><span class="keyword-badge">마카롱</span><span class="keyword-badge">젤리</span>
+            </p>
+            <p><strong>🏪 브랜드 선호:</strong> 
+                <span class="keyword-badge">유어스</span><span class="keyword-badge">헤이루</span><span class="keyword-badge">득템</span><span class="keyword-badge">PB</span><span class="keyword-badge">전용</span>
+            </p>
+            <p><strong>🔥 트렌드/인기:</strong> 
+                <span class="keyword-badge">마라</span><span class="keyword-badge">요아정</span><span class="keyword-badge">두바이</span><span class="keyword-badge">신상</span><span class="keyword-badge">대란</span><span class="keyword-badge">불닭</span>
+            </p>
+        </section>
+
+        <section id="flowchart">
+            <h2>6. 전체 서비스 플로우 차트</h2>
+            <p>YOUNG리한 파트너의 서비스 작동 과정을 다이어그램으로 한눈에 확인해 보세요.</p>
+            
+            <div class="mermaid-container">
+                <div class="mermaid">
+graph TD
+    %% 1단계: 사용자 온보딩
+    subgraph Phase1 [PHASE 1: 개인 맞춤 설문]
+        A[앱 접속] --> B[맞춤형 설문 진행]
+        B --> B1["성향 선택 (헬스/디저트/브랜드/트렌드)"]
+        B --> B2["보유 정보 입력 (통신사/카드/학생여부)"]
+    end
+
+    %% 2단계: 소비스타일 맞춤 인사말 
+    subgraph Phase2 [PHASE 2: 개인화 온보딩]
+        B1 & B2 --> C{소비 스타일 매칭}
+        C -- Health --> D["🥗 헬시 모드 인사"]
+        C -- Dessert --> E["🍰 디저트 모드 인사"]
+        C -- Brand --> F["🏪 브랜드 모드 인사"]
+        C -- Trend --> G["🔥 트렌드 모드 인사"]
+    end
+
+    %% 3단계: AI 검색 및 계산 
+    subgraph Phase3 [PHASE 3: AI 기반 지능형 할인 계산 엔진]
+        H[사용자 상품 검색] --> I{실시간 데이터 조회}
+        I --> J["1차: 편의점 행사 적용 (1+1, 2+1 등)"]
+
+        J --> K{사용자 데이터 매칭}
+
+        K --> L{대학생 전용 통신사 여부}
+        L -- 가입자 --> L1["유쓰/0청년/Y박스 혜택 즉시 차감"]
+        L -- 미가입자 --> L2["일반 통신사 멤버십 할인 적용"]
+
+        K --> M{사용 카드 브랜드 확인}
+        M -- 제휴카드 --> M1["카드사 청구/캐시백 혜택 계산"]
+        M -- 미제휴 --> M2["혜택 계산 제외"]
+    end
+
+    %% 4단계: 결과 도출 및 추천 
+    subgraph Phase4 [PHASE 4: 최종 응답]
+        L1 & L2 & M1 & M2 --> N[최종 혜택가 산출]
+        N --> O["상세 할인 내역 리스트업"]
+        
+        O --> P{학생 혜택 누락 확인}
+        P -- 미가입/미보유 --> Q["🎓 대학생 맞춤 카드/통신사 추천"]
+        P -- 모두 보유 --> R["✨ 완벽한 할인 조합 달성 안내"]
+
+        Q & R --> S["📍 근처 편의점 찾기 (지도 연결)"]
+    end
+
+    Phase2 --> H
+                </div>
+            </div>
+
+            <h3>카드 추천 예시 플로우</h3>
+            <div class="mermaid-container">
+                <div class="mermaid">
+graph TD
+    A[사용자 상품 검색] --> B{판매 편의점 확인}
+    B -- GS25 상품일 경우 --> C[1순위: 신한 S20 체크 추천]
+    C --> D[2순위: 우리카드 우리V체크 추천]
+    B -- CU 등 타 브랜드일 경우 --> E[1순위: 우리카드 우리V체크 추천]
+    E --> F[대학생 혜택 추천]
+    D --> G[챗봇 응답 하단에 노출]
+    F --> G
+    G --> H["🎓 대학생이신가요? 카드를 사용하시면..."]
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: { primaryColor: '#f0f4ff', primaryBorderColor: '#4361ee', primaryTextColor: '#333' } });
+
+        // Simple smooth scroll and active link highlight
+        document.querySelectorAll('.sidebar a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                document.querySelectorAll('.sidebar a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

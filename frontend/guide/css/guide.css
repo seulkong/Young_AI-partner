@@ -1,0 +1,195 @@
+/* frontend/guide/css/guide.css */
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap');
+
+body {
+    font-family: 'Noto Sans KR', sans-serif;
+    line-height: 1.6;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    display: flex;
+}
+
+/* Sidebar Navigation */
+.sidebar {
+    width: 260px;
+    background-color: #fff;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow-y: auto;
+    border-right: 1px solid #e9ecef;
+    padding: 2rem 1.5rem;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.02);
+}
+
+.sidebar h2 {
+    font-size: 1.2rem;
+    color: #4361ee;
+    margin-bottom: 1.5rem;
+    font-weight: 700;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar li {
+    margin-bottom: 0.8rem;
+}
+
+.sidebar a {
+    text-decoration: none;
+    color: #495057;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.2s;
+    display: block;
+    padding: 0.5rem;
+    border-radius: 8px;
+}
+
+.sidebar a:hover, .sidebar a.active {
+    color: #4361ee;
+    background-color: #f0f4ff;
+}
+
+/* Main Content Area */
+.main-content {
+    margin-left: 290px;
+    padding: 3rem 4rem;
+    max-width: 900px;
+    background-color: #fff;
+    min-height: 100vh;
+    box-shadow: 0 0 20px rgba(0,0,0,0.01);
+}
+
+.guide-header {
+    margin-bottom: 3rem;
+    border-bottom: 2px solid #f1f3f5;
+    padding-bottom: 1rem;
+}
+
+.guide-header h1 {
+    font-size: 2.2rem;
+    color: #212529;
+    margin-bottom: 0.5rem;
+}
+
+.guide-header p {
+    font-size: 1.1rem;
+    color: #868e96;
+}
+
+section {
+    margin-bottom: 3.5rem;
+}
+
+h2 {
+    font-size: 1.5rem;
+    color: #343a40;
+    margin-bottom: 1.2rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #e9ecef;
+    margin-top: 2rem;
+}
+
+h3 {
+    font-size: 1.2rem;
+    color: #495057;
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    color: #495057;
+}
+
+ul {
+    padding-left: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+li {
+    margin-bottom: 0.5rem;
+    color: #495057;
+}
+
+.keyword-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    background-color: #f0f4ff;
+    color: #4361ee;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-right: 5px;
+    margin-bottom: 5px;
+}
+
+.example-box {
+    background-color: #f8f9fa;
+    border-left: 4px solid #4361ee;
+    padding: 1rem 1.5rem;
+    margin-bottom: 1.5rem;
+    border-radius: 0 8px 8px 0;
+}
+
+.example-box p:last-child {
+    margin-bottom: 0;
+}
+
+.mermaid-container {
+    margin: 2rem 0;
+    padding: 1.5rem;
+    background-color: #fff;
+    border: 1px solid #e9ecef;
+    border-radius: 12px;
+    overflow-x: auto;
+    display: flex;
+    justify-content: center;
+}
+
+/* Back button */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 0.6rem 1.2rem;
+    background-color: #fff;
+    color: #4361ee;
+    text-decoration: none;
+    border: 1px solid #cce0ff;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+    margin-bottom: 2rem;
+}
+
+.back-btn:hover {
+    background-color: #4361ee;
+    color: #fff;
+}
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid #e9ecef;
+        padding: 1rem;
+    }
+    .main-content {
+        margin-left: 0;
+        padding: 2rem 1.5rem;
+    }
+}
