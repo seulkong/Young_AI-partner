@@ -115,6 +115,7 @@
             <h2>6. 전체 서비스 플로우 차트</h2>
             <p>YOUNG리한 파트너의 서비스 작동 과정을 다이어그램으로 한눈에 확인해 보세요.</p>
             
+            <p class="zoom-hint">💡 다이어그램을 클릭하면 확대해서 볼 수 있습니다.</p>
             <div class="mermaid-container">
                 <div class="mermaid">
 graph TD
@@ -167,6 +168,7 @@ graph TD
             </div>
 
             <h3>카드 추천 예시 플로우</h3>
+            <p class="zoom-hint">💡 다이어그램을 클릭하면 확대해서 볼 수 있습니다.</p>
             <div class="mermaid-container">
                 <div class="mermaid">
 graph TD
@@ -198,6 +200,40 @@ graph TD
                 this.classList.add('active');
             });
         });
+
+        // Diagram Zoom functionality
+        document.addEventListener('click', function(e) {
+            const mermaidContainer = e.target.closest('.mermaid');
+            if(mermaidContainer) {
+                const svg = mermaidContainer.querySelector('svg');
+                if(svg) {
+                    const modal = document.getElementById('imageModal');
+                    const modalContent = document.getElementById('modal-diagram-container');
+                    modalContent.innerHTML = '';
+                    const clonedSvg = svg.cloneNode(true);
+                    clonedSvg.style.maxWidth = '100%';
+                    clonedSvg.style.height = 'auto';
+                    modalContent.appendChild(clonedSvg);
+                    modal.style.display = 'block';
+                }
+            }
+        });
+        
+        document.querySelector('.image-modal-close').addEventListener('click', () => {
+            document.getElementById('imageModal').style.display = 'none';
+        });
+
+        document.getElementById('imageModal').addEventListener('click', function(e) {
+            if(e.target === this) {
+                this.style.display = 'none';
+            }
+        });
     </script>
+    
+    <!-- Zoom Modal -->
+    <div id="imageModal" class="image-modal">
+        <span class="image-modal-close">&times;</span>
+        <div class="image-modal-content" id="modal-diagram-container"></div>
+    </div>
 </body>
 </html>
