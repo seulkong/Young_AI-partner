@@ -57,6 +57,7 @@ Young-AI 파트너는 복합적인 카드 혜택과 통신사 등급을 보유�
 
 ```text
 ├── frontend/    # 사용자 UI (HTML, CSS, JS) 및 챗봇 인터페이스 화면
+│   └── guide/   # 자체 웹 사용 가이드 페이지 및 시각화 다이어그램 문서
 ├── backend/     # Cloudflare Workers 기반 API 서버 (api_server.py) 및 할인 로직 엔진
 ├── data/        # 크롤링 결과 JSON, 카드/통신사 제휴 정보 CSV, 사용자 데이터베이스
 ├── crawler/     # 편의점 행사 상품 자동 수집용 파이썬 크롤러 스크립트
