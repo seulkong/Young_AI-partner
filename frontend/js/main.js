@@ -681,7 +681,7 @@ function sendMessage() {
     if (!loggedInUserStr) return;
     const loggedInUser = JSON.parse(loggedInUserStr);
 
-    const serverUrl = 'http://127.0.0.1:8787/search'; 
+    const serverUrl = 'https://young-ai-budget-mate-api.cana1222.workers.dev/search'; 
     
     fetch(serverUrl, {
         method: 'POST',
@@ -852,7 +852,7 @@ function sendMessage() {
     })
     .catch(error => {
         console.error('Error:', error);
-        addMessageToChat('bot', '앗, 잠시 정보를 불러오는 데 문제가 생겼어요. 로컬 서버(127.0.0.1:8787)가 켜져 있는지 확인해 주세요!');
+        addMessageToChat('bot', '앗, 잠시 정보를 불러오는 데 문제가 생겼어요. 네트워크 상태를 확인해 주세요!');
     });
 }
 
@@ -880,7 +880,7 @@ function renderCurationCards(userStyle) {
         } catch (e) {}
     }
 
-    fetch('http://127.0.0.1:8787/api/curation', {
+    fetch('https://young-ai-budget-mate-api.cana1222.workers.dev/api/curation', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ userStyle, userStore })
@@ -1187,7 +1187,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 addMessageToChat('bot', 'AI가 분석하고 있습니다...');
                 
                 setTimeout(() => {
-                    fetch('http://127.0.0.1:8787/api/scan', {
+                    fetch('https://young-ai-budget-mate-api.cana1222.workers.dev/api/scan', {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({ filename: file.name })
@@ -1219,7 +1219,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const storeName = (loggedInUser.store && loggedInUser.store !== 'none') ? loggedInUser.store : 'GS25';
         const userStyle = loggedInUser.style || 'trend';
 
-        fetch('http://127.0.0.1:8787/api/curation', {
+        fetch('https://young-ai-budget-mate-api.cana1222.workers.dev/api/curation', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ userStyle, userStore: storeName })
