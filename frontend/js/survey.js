@@ -57,8 +57,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 const carrierEl = surveyForm.querySelector('input[name="carrier"]:checked');
                 const tierEl = surveyForm.querySelector('input[name="carrier_tier"]:checked');
                 const studentTelEl = surveyForm.querySelector('input[name="student_telecom"]:checked');
+                const paymentEls = surveyForm.querySelectorAll('input[name="payment"]:checked');
 
-                if (!storeEl || !carrierEl || !tierEl || !studentTelEl) {
+                if (!storeEl || !carrierEl || !tierEl || !studentTelEl || paymentEls.length === 0) {
                     alert("모든 설문 항목에 답해 주세요!");
                     return;
                 }
@@ -67,6 +68,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 const carrier = carrierEl.value;
                 const carrier_tier = tierEl.value;
                 const is_student_telecom = studentTelEl.value === 'yes';
+                
+                const payments = [];
+                paymentEls.forEach(el => payments.push(el.value));
+                const payment = payments.join(',');
+
                 let card = 'none';
                 if (cardIssuerSelect.value !== 'none' && cardIssuerSelect.value !== '') {
                     card = cardNameSelect.value || 'none';
@@ -78,6 +84,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 loggedInUser.carrier_tier = carrier_tier;
                 loggedInUser.is_student_telecom = is_student_telecom;
                 loggedInUser.card = card;
+                loggedInUser.payment = payment;
                 
                 localStorage.setItem('loggedInUser', JSON.stringify(loggedInUser));
 

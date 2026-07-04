@@ -52,8 +52,11 @@ async def on_fetch(request, env):
             is_recommend = any(kw in item_name for kw in recommend_keywords)
             search_results = [i for i in crawling_data if item_name in i.get('name', '')]
             
-            # 리스트 응답
-            if is_recommend or (len(search_results) > 1 and item_name not in [i['name'] for i in search_results]):
+            # 검색어와 정확히 일치하는 상품이 있는지 파악
+            has_exact_match = any(i.get('name') == item_name for i in crawling_data)
+
+            # 리스트 응답 (정확히 일치하는 상품이 없을 때만 추천/리스트 모드 진입)
+            if not has_exact_match and (is_recommend or (len(search_results) > 1 and item_name not in [i['name'] for i in search_results])):
                 options = []
                 exclude_kws = ['쏘피', '화이트', '바디피트', '샴푸', '린스', '치약', '칫솔', '비누', '세제', '휴지', '건전지']
                 
@@ -210,7 +213,7 @@ async def on_fetch(request, env):
                             # 해당 편의점 브랜드 혹은 '주요 편의점' 포함 여부 확인
                             if shop in target_brands or '주요 편의점' in target_brands:
                                 benefit = row.get('Benefit_Details', '할인 혜택')
-                                card_recommendation += f"\n💡 {shop} 꿀팁! '{row.get('Card_Name')}' ({row.get('Issuer')})를 쓰시면 {benefit} 혜택을 받을 수 있어요!"
+                                card_recommendation += f"\n[꿀팁] {shop} 꿀팁! '{row.get('Card_Name')}' ({row.get('Issuer')})를 쓰시면 {benefit} 혜택을 받을 수 있어요!"
                                 break
                 except Exception as e:
                     print(f"Card error: {e}")
@@ -219,19 +222,20 @@ async def on_fetch(request, env):
             
             # 선호 편의점과 결과 편의점이 다를 경우 안내 멘트 추가
             if user_store != 'none' and user_store.upper() != shop.upper():
-                msg += f"💡 선호하시는 {user_store}보다 {shop}에서 더 좋은 혜택이 있어 추천해 드려요!\n"
+                msg += f"[안내] 선호하시는 {user_store}보다 {shop}에서 더 좋은 혜택이 있어 추천해 드려요!\n"
             
             msg += "\n"
             msg += f"기본 가격: {base_price:,}원\n"
             if discount_details:
                 msg += "\n[적용된 할인 혜택]\n" + "\n".join(discount_details) + "\n"
-            msg += f"\n✨ 최종 혜택가: {int(final_price):,}원"
+            msg += f"\n최종 혜택가: {int(final_price):,}원"
             if card_recommendation: msg += "\n" + card_recommendation
 
             return Response.new(json.dumps({
                 "type": "result",
                 "message": msg,
-                "shop": shop 
+                "shop": shop,
+                "saved_amount": int(base_price - final_price)
             }), headers=headers)
 
         elif path == "/api/signup" and method == "POST":
@@ -257,6 +261,18 @@ async def on_fetch(request, env):
             user_id, store, carrier = data.get("id"), data.get("store"), data.get("carrier")
             await env.DB.prepare("UPDATE users SET store = ?, carrier = ? WHERE id = ?").bind(store, carrier, user_id).run()
             return Response.new(json.dumps({"message": "OK"}), headers=headers)
+
+        elif path == "/api/scan" and method == "POST":
+            # OCR 비전 AI 시뮬레이션 (해커톤 MVP 용)
+            # 실제 상용화 시 이 부분에 Google Cloud Vision API나 Cloudflare AI OCR 모델 연동
+            js_data = await request.json()
+            data = js_data.to_py()
+            
+            mock_message = "[Vision AI 스캔 완료!]\n\n• 품목: 오레오씬즈화이트 (2,000원)\n\n[Young-AI 사후 분석 피드백]\n앗! 등록하신 'SKT 멤버십' 바코드를 제시하셨다면 200원을 아낄 수 있었어요.\n게다가 이 품목은 현재 근처 편의점에서 **1+1 행사** 중이네요. 다음엔 결제 전에 챗봇에게 꼭 물어보세요!"
+            
+            return Response.new(json.dumps({
+                "message": mock_message
+            }), headers=headers)
 
         return Response.new("Not Found", status=404, headers=headers)
 

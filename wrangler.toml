@@ -1,9 +1,6 @@
-name = "ai-budget-mate-api"
-main = "backend/api_server.py"
+name = "young-ai-budget-mate-api"
+main = "backend/api_server.js"
 compatibility_date = "2024-04-03"
-compatibility_flags = ["python_workers"]
-
-# 파이썬 지원 활성화는 compatibility_flags로 처리됩니다.
 
 # D1 데이터베이스 설정 (회원 정보용)
 [[d1_databases]]
@@ -16,6 +13,3 @@ database_id = "76c718a2-8ca2-44f4-ac9a-fbff05f97721"
 binding = "CRAWLING_KV"
 id = "324ca4cce7424048b323c5d33712b0d7"
 
-# 크론 트리거 (6시간마다 크롤링 실행)
-[triggers]
-crons = ["0 */6 * * *"]

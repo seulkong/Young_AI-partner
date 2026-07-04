@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 140" width="220" height="140">
+  <defs>
+    <!-- CU Pay purple gradient: left-top pink to right-bottom purple -->
+    <linearGradient id="cuGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#B86AE8"/>
+      <stop offset="100%" stop-color="#7B2FD0"/>
+    </linearGradient>
+  </defs>
+  <rect width="220" height="140" rx="0" fill="url(#cuGrad)"/>
+
+  <!-- Speech bubble / circle outline around "cu" -->
+  <!-- Outer circle -->
+  <circle cx="82" cy="62" r="46" fill="none" stroke="#FFFFFF" stroke-width="6"/>
+  <!-- Small tail of the speech bubble pointing bottom-right -->
+  <path d="M 112 96 Q 125 110 108 114 Q 116 108 112 96 Z" fill="#FFFFFF"/>
+
+  <!-- "cu" text inside the circle -->
+  <text x="82" y="76" font-family="'Arial Black', 'Helvetica Neue', sans-serif" font-weight="900" font-size="36" fill="#FFFFFF" text-anchor="middle" letter-spacing="-1">cu</text>
+
+  <!-- "pay" text to the right of circle -->
+  <text x="148" y="76" font-family="'Arial Black', 'Helvetica Neue', sans-serif" font-weight="900" font-size="34" fill="#FFFFFF" text-anchor="middle">pay</text>
+</svg>

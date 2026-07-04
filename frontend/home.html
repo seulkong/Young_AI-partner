@@ -5,63 +5,167 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>홈 - Young-AI 파트너</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/style.css?v=6">
 </head>
 
 <body class="home-body">
     <div class="home-container">
-        <header>
-            <h1><span id="homeUserName"></span>님, 환영합니다!</h1>
-            <div class="header-buttons">
-                <a href="guide/index.html" class="guide-btn">사용 가이드</a>
-                <button id="logoutButton" class="logout-btn">정보 초기화</button>
+        <!-- 1. 헤더 영역 -->
+        <header style="display: flex; flex-direction: column; align-items: stretch; justify-content: flex-start; gap: 15px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 5px;">
+                <h1 style="margin: 0; word-break: keep-all; flex: 1;"><span id="homeUserName"></span>님, 환영합니다!</h1>
+                <div class="header-buttons" style="margin: 0;">
+                    <a href="guide/index.html" class="guide-btn">사용 가이드</a>
+                    <button id="logoutButton" class="logout-btn">정보 초기화</button>
+                </div>
+            </div>
+            
+            <div id="profileSummaryContainer" style="background: rgba(255,255,255,0.6); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.9); box-shadow: inset 0 2px 5px rgba(255,255,255,1), 0 4px 12px rgba(0,0,0,0.03); display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <h3 style="margin: 0; font-size: 1.1rem; color: #1e293b; font-weight: 800;">내 맞춤 혜택 프로필</h3>
+                    <button onclick="location.href='survey.html'" style="padding: 8px 16px; background: linear-gradient(135deg, #6366f1, #4f46e5); color: white; border: none; border-radius: 10px; font-size: 0.85rem; font-weight: 700; cursor: pointer; box-shadow: 0 4px 10px rgba(79, 70, 229, 0.3); transition: transform 0.2s;">설정 변경하기</button>
+                </div>
+                <div id="profileSummaryTags" style="display: flex; flex-wrap: wrap; gap: 10px; font-size: 0.9rem;">
+                    <!-- JS에서 동적으로 채워짐 -->
+                </div>
             </div>
         </header>
 
-        <main>
-            <!-- 탭 메뉴는 숨김 처리 (챗봇 연동 시에만 사용) -->
-            <nav class="tab-menu" style="display: none;">
-                <button class="tab-link" onclick="openTab(event, 'Map')">근처 편의점 찾기</button>
-                <button class="tab-link active" onclick="openTab(event, 'Chatbot')">AI 챗봇</button>
-            </nav>
-
-            <!-- AI 챗봇 (기본 화면) -->
-            <div id="Chatbot" class="tab-content" style="display: block;">
-                <div class="chat-container">
-                    <div class="chat-window">
-                        <div class="chat-message bot-message">안녕하세요! 원하는 상품을 검색하면 최적의 구매 방법을 찾아드릴게요.</div>
+        <!-- 2. 메인 대시보드 영역 (스크롤) -->
+        <main class="dashboard-main">
+            <!-- Google AI Studio 배너 -->
+            <section class="dashboard-section card-glass" style="margin-bottom: 1.5rem; background: linear-gradient(135deg, rgba(66, 133, 244, 0.1), rgba(234, 67, 53, 0.05)); border: 1px solid rgba(66, 133, 244, 0.2); cursor: pointer; transition: transform 0.2s;" onclick="location.href='ai-studio.html'">
+                <div style="display: flex; align-items: center; justify-content: space-between;">
+                    <div>
+                        <div style="font-size: 0.85rem; font-weight: 800; color: #4285F4; margin-bottom: 6px; letter-spacing: 0.5px; display: flex; align-items: center;">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 6px;">
+                                <path d="M12 0C12 6.62742 17.3726 12 24 12C17.3726 12 12 17.3726 12 24C12 17.3726 6.62742 12 0 12C6.62742 12 12 6.62742 12 0Z" fill="url(#geminiGradient)"/>
+                                <defs>
+                                    <linearGradient id="geminiGradient" x1="0" y1="12" x2="24" y2="12" gradientUnits="userSpaceOnUse">
+                                        <stop stop-color="#4285F4"/>
+                                        <stop offset="0.5" stop-color="#EA4335"/>
+                                        <stop offset="1" stop-color="#FBBC05"/>
+                                    </linearGradient>
+                                </defs>
+                            </svg>
+                            POWERED BY GOOGLE GEMINI
+                        </div>
+                        <h2 style="margin: 0; font-size: 1.2rem; display: flex; align-items: center; gap: 8px;">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EA4335" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.9 1.3 1.5 1.5 2.5"/><path d="M9 18h6"/><path d="M10 22h4"/></svg>
+                            복잡한 할인 계산, Gemini로 한 번에 해결하기
+                        </h2>
+                        <p style="margin: 8px 0 0 0; font-size: 0.95rem; color: #64748b;">클릭해서 Google AI Studio 연동 가이드를 확인해 보세요!</p>
                     </div>
-                    <div class="chat-input">
-                        <input type="text" id="chatInput" placeholder="상품명을 입력하세요 (예: 오레오씬즈화이트)">
-                        <button id="chatSendButton">➤</button>
-                    </div>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4285F4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
                 </div>
-            </div>
+            </section>
 
-            <!-- 근처 편의점 찾기 (초기 숨김) -->
-            <div id="Map" class="tab-content" style="display: none;">
-                <p
-                    style="text-align: center; color: #007bff; margin-bottom: 15px; font-size: 0.95em; font-weight: bold; background-color: #e9f2ff; padding: 10px; border-radius: 8px;">
-                    📍 위치를 자세히 확인하려면 편의점을 클릭해 보세요!
-                </p>
+
+
+            <!-- 섹션 A (기존 Curation) -> 원래 섹션 B였던 부분 -->
+            <section class="dashboard-section card-glass">
+                <div class="section-header">
+                    <h2 class="section-title" id="curationTitle" style="display: flex; align-items: center; flex-wrap: wrap; gap: 6px; word-break: keep-all; line-height: 1.4;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#e74c3c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; flex-shrink: 0;"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
+                        오늘의 맞춤형 픽
+                    </h2>
+                </div>
+                <div class="curation-scroll" id="curationList">
+                    <!-- JS에서 동적으로 채워짐 -->
+                    <div class="curation-item skeleton"></div>
+                    <div class="curation-item skeleton"></div>
+                    <div class="curation-item skeleton"></div>
+                </div>
+            </section>
+
+            <!-- 섹션 C: 근처 편의점 찾기 -->
+            <section class="dashboard-section card-glass">
+                <div class="section-header">
+                    <h2 class="section-title" style="display: flex; align-items: center;">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#4F46E5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        근처 편의점 찾기
+                    </h2>
+                    <p class="section-subtitle">지도에서 매장을 클릭해 실시간 혜택을 확인하세요.</p>
+                </div>
+                <div class="store-filter-buttons">
+                    <button id="filterGS25" class="store-filter-btn active" style="display: flex; align-items: center; justify-content: center; padding: 8px 16px; height: 44px;">
+                        <img src="img/gs25_logo.png" style="height: 14px; object-fit: contain;" alt="GS25">
+                    </button>
+                    <button id="filterCU" class="store-filter-btn" style="display: flex; align-items: center; justify-content: center; padding: 8px 16px; height: 44px;">
+                        <img src="img/cu_logo.png" style="height: 26px; object-fit: contain;" alt="CU">
+                    </button>
+                </div>
                 <div class="map-layout">
-                    <div class="store-list-container">
-                        <div class="store-column">
-                            <h3>GS25 (가까운 순)</h3>
-                            <ul id="gs25-list">
-                            </ul>
+                    <div class="store-list-container" id="storeListContainer">
+                        <div class="store-column" id="gs25Column">
+                            <h3 style="display: flex; align-items: center; height: 40px;">
+                                <img src="img/gs25_logo.png" style="height: 18px; object-fit: contain;" alt="GS25">
+                            </h3>
+                            <ul id="gs25-list"></ul>
                         </div>
-                        <div class="store-column">
-                            <h3>CU (가까운 순)</h3>
-                            <ul id="cu-list">
-                            </ul>
+                        <div class="store-column" id="cuColumn" style="display: none;">
+                            <h3 style="display: flex; align-items: center; height: 40px;">
+                                <img src="img/cu_logo.png" style="height: 36px; object-fit: contain;" alt="CU">
+                            </h3>
+                            <ul id="cu-list"></ul>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
 
-
+            <!-- 섹션 C (기존 나의 절약 리포트) -> 맨 아래로 이동 -->
+            <section class="dashboard-section card-glass" style="margin-top: 1.5rem;">
+                <div class="section-badge">내 소비 리포트</div>
+                <h2 class="section-title">이번 달 누적 절약 금액</h2>
+                <p class="savings-amount">
+                    <span id="totalSavedAmount">0</span><span class="currency">원</span>
+                </p>
+                <p id="savingBadge" class="saving-badge" style="display: flex; align-items: center; justify-content: center; gap: 4px;">
+                    조금 더 모아서 상위 10% 스마트 컨슈머가 되어보세요!
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#cd7f32" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="7"/><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/></svg>
+                </p>
+                <div class="chart-container">
+                    <canvas id="savingChart"></canvas>
+                </div>
+            </section>
         </main>
+
+        <!-- 3. 플로팅 AI 챗봇 영역 -->
+        <!-- 플로팅 액션 버튼 (FAB) -->
+        <div class="chatbot-fab-wrapper">
+            <button id="chatbotFab" class="chatbot-fab">
+                <span class="fab-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+                </span>
+                <span class="fab-text">Young-AI</span>
+            </button>
+        </div>
+
+        <!-- 슬라이드업 챗봇 윈도우 -->
+        <div id="floatingChatbot" class="floating-chatbot hidden">
+            <div class="chat-header">
+                <h3 style="display: flex; align-items: center;">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 8px;"><path d="M12 8V4H8"/><rect width="16" height="12" x="4" y="8" rx="2"/><path d="M2 14h2"/><path d="M20 14h2"/><path d="M15 13v2"/><path d="M9 13v2"/></svg>
+                    Young-AI 파트너
+                    <span class="online-indicator"></span>
+                </h3>
+                <div class="chat-header-actions">
+                    <button id="expandChatBtn" class="header-icon-btn" title="크게 보기">⛶</button>
+                    <button id="closeChatBtn" class="close-chat-btn" title="닫기">&times;</button>
+                </div>
+            </div>
+            <div class="chat-window" id="chatWindow">
+                <div class="chat-message bot-message">안녕하세요! 원하는 상품을 검색하면 최적의 구매 방법을 찾아드릴게요.</div>
+            </div>
+            <div class="chat-input-area">
+                <label for="imageUpload" class="upload-btn" title="영수증 스캔">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+                </label>
+                <input type="file" id="imageUpload" accept="image/*" style="display: none;">
+                <input type="text" id="chatInput" placeholder="상품명 입력 (예: 오레오)">
+                <button id="chatSendButton">➤</button>
+            </div>
+        </div>
 
         <!-- 지도 모달 -->
         <div id="mapModal" class="map-modal">
@@ -71,11 +175,28 @@
                     <button class="close-modal" onclick="closeMapModal()">&times;</button>
                 </div>
                 <div id="modal-map-view" class="modal-map-view"></div>
+                
             </div>
         </div>
 
+        <!-- 혜택 상세 모달 -->
+        <div id="benefitModal" class="map-modal">
+            <div class="map-modal-content" style="max-width: 600px; height: auto; max-height: 80vh; margin: 8% auto;">
+                <div class="map-modal-header" style="background: var(--primary-color); color: white; border-top-left-radius: 24px; border-top-right-radius: 24px; padding: 1.25rem 2rem;">
+                    <h2 id="benefitModalTitle" style="margin: 0; font-size: 1.25rem; font-weight: bold; color: white;">혜택 상세 안내</h2>
+                    <button class="close-modal" onclick="closeBenefitModal()" style="color: white; font-size: 2rem; background: transparent; border: none; cursor: pointer; line-height: 1;">&times;</button>
+                </div>
+                <div id="benefitModalBody" style="padding: 2rem; overflow-y: auto; font-size: 0.95rem; line-height: 1.6; color: #4a5568; max-height: 60vh; background: #ffffff;">
+                    <!-- JS에서 동적으로 채워짐 -->
+                </div>
+            </div>
+        </div>
+
+
+
     </div>
-    <script src="js/main.js?v=7" charset="utf-8"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/main.js?v=24" charset="utf-8"></script>
 </body>
 
 </html>

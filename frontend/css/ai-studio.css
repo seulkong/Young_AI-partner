@@ -1,0 +1,271 @@
+/* Google AI Studio Guide Page Styles */
+:root {
+    --google-blue: #4285F4;
+    --google-red: #EA4335;
+    --google-yellow: #FBBC05;
+    --google-green: #34A853;
+    --bg-dark: #0f172a;
+    --text-light: #f8fafc;
+    --text-muted: #94a3b8;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+}
+
+body.ai-studio-theme {
+    margin: 0;
+    padding: 0;
+    font-family: 'Outfit', 'Noto Sans KR', sans-serif;
+    background-color: var(--bg-dark);
+    color: var(--text-light);
+    overflow-x: hidden;
+    min-height: 100vh;
+    background-image: 
+        radial-gradient(circle at 15% 50%, rgba(66, 133, 244, 0.15), transparent 25%),
+        radial-gradient(circle at 85% 30%, rgba(234, 67, 53, 0.15), transparent 25%),
+        radial-gradient(circle at 50% 80%, rgba(52, 168, 83, 0.15), transparent 25%);
+    background-attachment: fixed;
+}
+
+/* Animations */
+@keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+    100% { transform: translateY(0px); }
+}
+
+@keyframes gradientText {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Layout Elements */
+.nav-header {
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--glass-border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.nav-header .back-link {
+    color: var(--text-light);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    transition: color 0.3s;
+}
+
+.nav-header .back-link:hover {
+    color: var(--google-blue);
+}
+
+.hero-section {
+    padding: 6rem 2rem 4rem;
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+    animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.badge-google {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 16px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 30px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    backdrop-filter: blur(10px);
+}
+
+.gemini-stars {
+    display: flex;
+    gap: 4px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(to right, #4285F4, #EA4335, #FBBC05, #34A853);
+    background-size: 300% auto;
+    color: transparent;
+    -webkit-background-clip: text;
+    background-clip: text;
+    animation: gradientText 6s linear infinite;
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Glassmorphism Cards */
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.glass-card {
+    background: var(--glass-bg);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    padding: 2rem;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.glass-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.card-icon {
+    width: 60px;
+    height: 60px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.card-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.card-desc {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* Interactive Prompt Section */
+.prompt-demo-section {
+    max-width: 1000px;
+    margin: 5rem auto;
+    padding: 3rem;
+    background: linear-gradient(145deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+    border-radius: 32px;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    position: relative;
+    overflow: hidden;
+}
+
+.prompt-demo-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, #4285F4, #EA4335, #FBBC05, #34A853);
+}
+
+.demo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    align-items: center;
+}
+
+.prompt-window {
+    background: #1e293b;
+    border-radius: 16px;
+    border: 1px solid #334155;
+    overflow: hidden;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.window-header {
+    background: #0f172a;
+    padding: 12px 16px;
+    display: flex;
+    gap: 8px;
+    border-bottom: 1px solid #334155;
+}
+
+.dot { width: 12px; height: 12px; border-radius: 50%; }
+.dot-red { background: #ef4444; }
+.dot-yellow { background: #f59e0b; }
+.dot-green { background: #10b981; }
+
+.prompt-content {
+    padding: 1.5rem;
+    font-family: 'Fira Code', monospace;
+    font-size: 0.9rem;
+    color: #a5b4fc;
+    line-height: 1.6;
+}
+
+.highlight { color: #f8fafc; font-weight: bold; }
+
+/* Primary Button */
+.cta-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: var(--text-light);
+    color: var(--bg-dark);
+    padding: 1rem 2.5rem;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    margin-top: 2rem;
+}
+
+.cta-button:hover {
+    transform: translateY(-3px) scale(1.02);
+    box-shadow: 0 15px 30px rgba(255, 255, 255, 0.2);
+}
+
+.cta-button svg {
+    transition: transform 0.3s;
+}
+
+.cta-button:hover svg {
+    transform: translateX(5px);
+}
+
+@media (max-width: 768px) {
+    .hero-title { font-size: 2.5rem; }
+    .demo-grid { grid-template-columns: 1fr; }
+    .prompt-demo-section { padding: 2rem; margin: 3rem 1rem; }
+}

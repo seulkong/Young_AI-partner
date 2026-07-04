@@ -84,9 +84,11 @@ if __name__ == "__main__":
     all_data.extend(cu_data)
 
     # 크롤링 결과를 JSON 파일로 저장
-    with open('crawling_result.json', 'w', encoding='utf-8') as f:
+    import os
+    os.makedirs('../data', exist_ok=True)
+    with open('../data/crawling_result.json', 'w', encoding='utf-8') as f:
         json.dump(all_data, f, ensure_ascii=False, indent=4)
         
-    print(f"\n✅ 크롤링 완료! 총 {len(all_data)}개의 데이터가 'crawling_result.json' 파일에 저장되었습니다.")
+    print(f"\n✅ 크롤링 완료! 총 {len(all_data)}개의 데이터가 '../data/crawling_result.json' 파일에 저장되었습니다.")
 
 

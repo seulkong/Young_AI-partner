@@ -4,25 +4,318 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>프로필 설정 - Young-AI 파트너</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-glow: rgba(79, 70, 229, 0.5);
+            --bg-glass: rgba(255, 255, 255, 0.6);
+            --border-glass: rgba(255, 255, 255, 0.8);
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            padding: 20px;
+            box-sizing: border-box;
+            color: var(--text-dark);
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Abstract blobs in background */
+        .blob {
+            position: absolute;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 400px; height: 400px; background: #a78bfa; border-radius: 50%; }
+        .blob-2 { bottom: -10%; right: -10%; width: 500px; height: 500px; background: #60a5fa; border-radius: 50%; }
+
+        .glass-container {
+            width: 100%;
+            max-width: 480px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+            border-radius: 32px;
+            padding: 2.5rem 2.5rem 3rem 2.5rem;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h2 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e293b, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .header p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            font-weight: 500;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            font-size: 1.05rem;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.7);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            color: var(--text-dark);
+        }
+
+        .input-field::placeholder { color: #94a3b8; }
+        .input-field:focus {
+            outline: none;
+            background: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+        }
+
+        .style-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .style-card {
+            position: relative;
+            background: rgba(255,255,255,0.5);
+            border: 2px solid rgba(255,255,255,0.8);
+            border-radius: 20px;
+            padding: 1.25rem 1rem;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .style-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255,255,255,0.9);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+        }
+
+        .style-card input[type="radio"] {
+            display: none;
+        }
+
+        .style-icon {
+            font-size: 2.2rem;
+            margin-bottom: 5px;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .style-title {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+        }
+
+        .style-desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            line-height: 1.3;
+        }
+
+        /* Active State for Cards */
+        .style-card input[type="radio"]:checked + .card-content .style-icon {
+            transform: scale(1.2);
+        }
+
+        .style-card:has(input[type="radio"]:checked) {
+            background: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px var(--primary-glow);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 800;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 10px 25px var(--primary-glow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg);
+            transition: all 0.6s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px var(--primary-glow);
+        }
+
+        .submit-btn:hover::before {
+            left: 150%;
+        }
+
+        /* Hidden select for compatibility with auth.js */
+        select#consumptionStyle {
+            display: none;
+        }
+    </style>
 </head>
 <body>
-    <div class="container">
-        <h2>반가워요! 어떻게 불러드릴까요?</h2>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    
+    <div class="glass-container">
+        <div class="header">
+            <h2>반가워요!</h2>
+            <p>Young-AI 파트너가 맞춤 혜택을 찾아드릴게요</p>
+        </div>
+        
+        <!-- Google Sign-In Button Container -->
+        <div id="googleSignInContainer" style="display: flex; justify-content: center; margin-bottom: 2rem;"></div>
+
+        <div style="display: flex; align-items: center; margin-bottom: 2rem;">
+            <div style="flex: 1; height: 1px; background: #cbd5e1;"></div>
+            <span style="padding: 0 10px; color: #94a3b8; font-size: 0.85rem; font-weight: 500;">또는</span>
+            <div style="flex: 1; height: 1px; background: #cbd5e1;"></div>
+        </div>
+        
         <form id="signupForm">
-            <input type="text" id="name" placeholder="이름을 입력해주세요" required>
-            <select id="consumptionStyle" required style="padding: 10px; margin-bottom: 15px; width: 100%; border: 1px solid #ccc; border-radius: 4px;">
-                <option value="">나의 소비 스타일은?</option>
-                <option value="health">🥗 헬시 플레저 (Healthy Pleasure) (단백질 듬뿍, 제로 슈거! 건강한 간식이 필요해요)</option>
-                <option value="dessert">🍰 디저트 러버 (스트레스 풀리는 달달한 편의점 디저트가 최고예요)</option>
-                <option value="brand">🏪 브랜드 선호 (제가 좋아하는 편의점 위주로 갈래요!)</option>
-                <option value="trend">🔥 신상/트렌드 추구 (요즘 핫한 신상품을 제일 먼저 먹어볼래요!)</option>
+            <div class="form-group">
+                <input type="text" id="name" class="input-field" placeholder="이름(닉네임)을 알려주세요" required autocomplete="off">
+            </div>
+            
+            <div class="form-group">
+                <p style="margin: 0 0 10px 5px; font-weight: 700; color: var(--text-dark); font-size: 0.95rem;">나의 소비 스타일은?</p>
+                <div class="style-grid">
+                    <label class="style-card">
+                        <input type="radio" name="styleRadio" value="health" required>
+                        <div class="card-content">
+                            <div class="style-icon"><i data-lucide="leaf"></i></div>
+                            <div class="style-title">헬시 플레저</div>
+                            <div class="style-desc">단백질 듬뿍, 제로 슈거!</div>
+                        </div>
+                    </label>
+                    <label class="style-card">
+                        <input type="radio" name="styleRadio" value="dessert">
+                        <div class="card-content">
+                            <div class="style-icon"><i data-lucide="cookie"></i></div>
+                            <div class="style-title">디저트 러버</div>
+                            <div class="style-desc">스트레스 풀리는 달달함</div>
+                        </div>
+                    </label>
+                    <label class="style-card">
+                        <input type="radio" name="styleRadio" value="brand">
+                        <div class="card-content">
+                            <div class="style-icon"><i data-lucide="store"></i></div>
+                            <div class="style-title">브랜드 선호</div>
+                            <div class="style-desc">좋아하는 편의점 위주로!</div>
+                        </div>
+                    </label>
+                    <label class="style-card">
+                        <input type="radio" name="styleRadio" value="trend">
+                        <div class="card-content">
+                            <div class="style-icon"><i data-lucide="flame"></i></div>
+                            <div class="style-title">신상/트렌드</div>
+                            <div class="style-desc">핫한 신상품 젤 먼저!</div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+
+            <!-- Hidden select to work with existing JS seamlessly -->
+            <select id="consumptionStyle">
+                <option value="health">health</option>
+                <option value="dessert">dessert</option>
+                <option value="brand">brand</option>
+                <option value="trend">trend</option>
             </select>
 
-            <button type="submit">시작하기</button>
+            <button type="submit" class="submit-btn">시작하기</button>
         </form>
-        <p id="signupMessage" class="error-message"></p>
     </div>
-    <script src="js/auth.js?v=2"></script>
+
+    <script>
+        // Sync radio buttons to hidden select
+        document.querySelectorAll('input[name="styleRadio"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                const select = document.getElementById('consumptionStyle');
+                select.value = e.target.value;
+            });
+        });
+        
+        // Disable submit button on form submit to prevent double clicks and show loading state
+        document.getElementById('signupForm').addEventListener('submit', function() {
+            const btn = this.querySelector('.submit-btn');
+            btn.innerHTML = '준비 중... <span style="display:inline-block; animation: spin 1s linear infinite;">⏳</span>';
+            btn.style.opacity = '0.8';
+        });
+    </script>
+    
+    <style>
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+    
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script src="js/google-auth.js"></script>
+    <script src="js/auth.js?v=4"></script>
+    <script>
+        lucide.createIcons();
+    </script>
 </body>
 </html>

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 100" width="280" height="100">
+  <rect width="280" height="100" rx="0" fill="#FFFFFF"/>
+  <!-- "GS" bold black -->
+  <text x="10" y="74" font-family="'Arial Black', 'Helvetica Neue', 'Impact', sans-serif" font-weight="900" font-size="66" fill="#111111">GS</text>
+  <!-- " Pay" -->
+  <text x="103" y="74" font-family="'Arial Black', 'Helvetica Neue', 'Impact', sans-serif" font-weight="900" font-size="66" fill="#111111"> Pay</text>
+  <!-- Blue curved tail of the "y" - a stroke that sweeps down and right -->
+  <path d="M 242 62 Q 252 90 260 80" stroke="#0077FF" stroke-width="8" fill="none" stroke-linecap="round"/>
+  <!-- Blue dot -->
+  <circle cx="268" cy="78" r="7" fill="#0077FF"/>
+</svg>

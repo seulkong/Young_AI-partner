@@ -1,44 +1,248 @@
 <!DOCTYPE html>
 <html lang="ko">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>설문조사 - Young-AI 파트너</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;700;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-glow: rgba(79, 70, 229, 0.5);
+            --bg-glass: rgba(255, 255, 255, 0.6);
+            --border-glass: rgba(255, 255, 255, 0.8);
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+        }
+
+        body {
+            font-family: 'Noto Sans KR', 'Outfit', sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(45deg, #e3eeff 0%, #f3e7e9 99%, #f3e7e9 100%);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            padding: 40px 20px;
+            box-sizing: border-box;
+            color: var(--text-dark);
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Abstract blobs in background */
+        .blob {
+            position: fixed;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.5;
+        }
+        .blob-1 { top: -10%; left: -10%; width: 400px; height: 400px; background: #60a5fa; border-radius: 50%; }
+        .blob-2 { bottom: -10%; right: -10%; width: 500px; height: 500px; background: #a78bfa; border-radius: 50%; }
+
+        .glass-container {
+            width: 100%;
+            max-width: 550px;
+            background: var(--bg-glass);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid var(--border-glass);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.08), inset 0 1px 0 rgba(255,255,255,0.6);
+            border-radius: 32px;
+            padding: 2.5rem 2.5rem 3rem 2.5rem;
+            animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .header h2 {
+            margin: 0 0 0.5rem 0;
+            font-size: 1.8rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e293b, #4f46e5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .survey-question {
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            border-radius: 20px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+            transition: transform 0.3s ease;
+        }
+
+        .survey-question:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.7);
+        }
+
+        .survey-question p {
+            margin: 0 0 1rem 0;
+            font-weight: 700;
+            color: var(--text-dark);
+            font-size: 1.05rem;
+        }
+
+        /* Checkbox/Radio Modern Styling */
+        .survey-question label {
+            display: block;
+            margin-bottom: 0.8rem;
+            cursor: pointer;
+            padding: 12px 15px;
+            background: rgba(255,255,255,0.5);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+
+        .survey-question label:hover {
+            background: rgba(255,255,255,0.8);
+            border-color: #cbd5e1;
+        }
+
+        .survey-question input[type="radio"],
+        .survey-question input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+
+        .survey-question label:has(input:checked) {
+            background: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 4px 15px rgba(79, 70, 229, 0.15);
+            color: var(--primary);
+        }
+
+        select {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            font-size: 1.05rem;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid transparent;
+            border-radius: 12px;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            color: var(--text-dark);
+            appearance: none;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        select:focus {
+            outline: none;
+            background: #ffffff;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px var(--primary-glow);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            border: none;
+            border-radius: 16px;
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: 800;
+            font-family: inherit;
+            cursor: pointer;
+            box-shadow: 0 10px 25px var(--primary-glow);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-top: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 50%; height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255,255,255,0.3), transparent);
+            transform: skewX(-20deg);
+            transition: all 0.6s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px var(--primary-glow);
+        }
+
+        .submit-btn:hover::before {
+            left: 150%;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h2>맞춤형 추천을 위한 설문</h2>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+
+    <div class="glass-container">
+        <div class="header">
+            <h2>맞춤형 추천을 위한 설정</h2>
+            <p>내 혜택을 100% 챙겨가기 위한 필수 정보</p>
+        </div>
+        
         <form id="surveyForm">
             <div class="survey-question">
-                <p>현재 <span id="userName"></span>님이 자주 사용하는 편의점은 어디인가요?</p>
+                <p><i data-lucide="store" style="vertical-align: text-bottom; width: 1.1rem; height: 1.1rem; margin-right: 4px; color: var(--text-muted);"></i> 현재 <span id="userName" style="color:var(--primary);"></span>님이 자주 가는 편의점은?</p>
                 <label><input type="radio" name="store" value="GS25" required> GS25</label>
                 <label><input type="radio" name="store" value="CU" required> CU</label>
             </div>
+            
             <div class="survey-question">
-                <p>현재 <span id="userName2"></span>님이 사용하시는 통신사는 어디인가요?</p>
+                <p><i data-lucide="smartphone" style="vertical-align: text-bottom; width: 1.1rem; height: 1.1rem; margin-right: 4px; color: var(--text-muted);"></i> 현재 <span id="userName2" style="color:var(--primary);"></span>님이 사용하는 통신사는?</p>
                 <label><input type="radio" name="carrier" value="KT" required> KT</label>
                 <label><input type="radio" name="carrier" value="LG U+" required> LG U+</label>
                 <label><input type="radio" name="carrier" value="SKT" required> SKT</label>
-                <label><input type="radio" name="carrier" value="none" required> 해당 없음</label>
+                <label><input type="radio" name="carrier" value="none" required> 알뜰폰 / 해당 없음</label>
             </div>
+            
             <div class="survey-question">
-                <p>통신사 멤버십 등급은 어떻게 되시나요? </p>
+                <p><i data-lucide="crown" style="vertical-align: text-bottom; width: 1.1rem; height: 1.1rem; margin-right: 4px; color: var(--text-muted);"></i> 통신사 멤버십 등급은 어떻게 되시나요?</p>
                 <label><input type="radio" name="carrier_tier" value="high" required> VIP / VVIP / Gold</label>
                 <label><input type="radio" name="carrier_tier" value="low" required> 일반 / Silver</label>
                 <label><input type="radio" name="carrier_tier" value="none" required> 해당 없음</label>
             </div>
+            
             <div class="survey-question">
-                <p>대학생 전용 멤버십(0청년, Y박스, 유쓰 등)에 가입되어 있으신가요?</p>
+                <p><i data-lucide="graduation-cap" style="vertical-align: text-bottom; width: 1.1rem; height: 1.1rem; margin-right: 4px; color: var(--text-muted);"></i> 대학생 전용 멤버십(0청년, Y박스, 유쓰 등) 가입여부</p>
                 <label><input type="radio" name="student_telecom" value="yes" required> 예 (가입됨)</label>
                 <label><input type="radio" name="student_telecom" value="no" required> 아니오 (가입 안 함)</label>
             </div>
+            
             <div class="survey-question">
-                <p>주로 결제할 때 사용하시는 카드를 알려주세요.</p>
-                <select id="cardIssuer" required style="padding: 5px; margin-bottom: 10px; width: 100%;">
-                    <option value="">카드사 선택</option>
+                <p><i data-lucide="credit-card" style="vertical-align: text-bottom; width: 1.1rem; height: 1.1rem; margin-right: 4px; color: var(--text-muted);"></i> 주로 결제할 때 사용하시는 카드는?</p>
+                <select id="cardIssuer" required>
+                    <option value="">주 결제 카드사 선택</option>
                     <option value="none">없음 / 해당 카드 없음</option>
                     <option value="신한카드">신한카드</option>
                     <option value="KB국민카드">KB국민카드</option>
@@ -51,15 +255,35 @@
                     <option value="NH농협카드">NH농협카드</option>
                     <option value="GS리테일">GSPOP카드</option>
                 </select>
-                <br>
-                <select id="cardName" style="padding: 5px; width: 100%; display: none;">
-                    <option value="">카드 선택</option>
+                <select id="cardName" style="display: none;">
+                    <option value="">세부 카드 선택</option>
                 </select>
             </div>
-            <button type="submit">제출하고 시작하기</button>
+            
+            <div class="survey-question">
+                <p><i data-lucide="wallet" style="vertical-align: text-bottom; width: 1.1rem; height: 1.1rem; margin-right: 4px; color: var(--text-muted);"></i> 가장 자주 쓰시는 간편결제(페이) 수단 (중복 가능)</p>
+                <label><input type="checkbox" name="payment" value="naver"> 네이버페이</label>
+                <label><input type="checkbox" name="payment" value="kakao"> 카카오페이</label>
+                <label><input type="checkbox" name="payment" value="toss"> 토스페이</label>
+                <label><input type="checkbox" name="payment" value="none"> 해당 없음 / 기타</label>
+            </div>
+            
+            <button type="submit" class="submit-btn"><i data-lucide="sparkles" style="vertical-align: text-bottom; width: 1.2rem; height: 1.2rem; margin-right: 6px;"></i> 설정 완료하고 시작하기</button>
         </form>
     </div>
-    <script src="js/survey.js?v=3" charset="utf-8"></script>
-</body>
 
+    <script src="js/survey.js?v=5" charset="utf-8"></script>
+    <script>
+        lucide.createIcons();
+        // Disable submit button on form submit to prevent double clicks
+        document.getElementById('surveyForm').addEventListener('submit', function() {
+            const btn = this.querySelector('.submit-btn');
+            btn.innerHTML = '적용 중... <span style="display:inline-block; animation: spin 1s linear infinite;">⏳</span>';
+            btn.style.opacity = '0.8';
+        });
+    </script>
+    <style>
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+    </style>
+</body>
 </html>
