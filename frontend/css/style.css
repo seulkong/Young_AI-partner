@@ -31,7 +31,7 @@ body {
     background: #ffffff;
     padding: 1.5rem;
     width: 100%;
-    max-width: 1024px;
+    max-width: 393px;
     min-height: 100vh;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
     text-align: center;
@@ -110,7 +110,7 @@ body.home-body {
 .home-container {
     background: #ffffff;
     width: 100%;
-    max-width: 1024px;
+    max-width: 393px;
     min-height: 100vh;
     margin: 0;
     padding: 1rem;
@@ -415,7 +415,7 @@ select:focus {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 1024px;
+    max-width: 393px;
     pointer-events: none;
     display: flex;
     justify-content: flex-end;
@@ -475,7 +475,7 @@ select:focus {
     left: 50%;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 1024px;
+    max-width: 393px;
     height: 80vh;
     max-height: 80vh;
     background: #fff;
@@ -613,7 +613,7 @@ select:focus {
     top: 0;
     transform: translateX(-50%);
     width: 100%;
-    max-width: 1024px;
+    max-width: 393px;
     height: 100%;
     background-color: rgba(15, 23, 42, 0.45); /* Dark sleek slate glass */
     backdrop-filter: blur(16px);
