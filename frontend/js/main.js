@@ -898,8 +898,13 @@ function renderCurationCards(userStyle) {
             const div = document.createElement('div');
             div.className = 'curation-item type-' + (userStyle || 'trend');
             let priceText = item.price ? (typeof item.price === 'number' ? item.price.toLocaleString() + '원' : item.price) : '가격 변동';
+            let imageHtml = item.img;
+            if (typeof imageHtml === 'string' && imageHtml.includes('<svg')) {
+                imageHtml = `<div style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 12px; color: #adb5bd; font-size: 0.8rem; font-weight: bold; border: 1px dashed #dee2e6; margin: 0 auto;">NO IMAGE</div>`;
+            }
+
             div.innerHTML = `
-                <div style="font-size: 2.5rem; margin-bottom: 10px;">${item.img}</div>
+                <div style="margin-bottom: 10px; display: flex; justify-content: center;">${imageHtml}</div>
                 <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: bold;">${item.badge}</span>
                 <h4 style="margin: 10px 0 5px 0; word-break: keep-all; font-size: 1.05rem;">${item.name}</h4>
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px;">
@@ -989,8 +994,13 @@ function fallbackCurationCards(userStyle, list, userStore = 'none') {
             brandBadge.textContent = brand;
         }
 
+        let imageHtml = item.img;
+        if (typeof imageHtml === 'string' && imageHtml.includes('<svg')) {
+            imageHtml = `<div style="width: 70px; height: 70px; display: flex; align-items: center; justify-content: center; background-color: #f8f9fa; border-radius: 12px; color: #adb5bd; font-size: 0.8rem; font-weight: bold; border: 1px dashed #dee2e6; margin: 0 auto;">NO IMAGE</div>`;
+        }
+
         div.innerHTML = `
-            <div style="font-size: 2.5rem; margin-bottom: 10px;">${item.img}</div>
+            <div style="margin-bottom: 10px; display: flex; justify-content: center;">${imageHtml}</div>
             <span style="background: #e74c3c; color: white; padding: 2px 8px; border-radius: 10px; font-size: 0.75rem; font-weight: bold;">${item.badge}</span>
             <h4 style="margin: 10px 0 5px 0;">${item.name}</h4>
             <p style="margin: 0; font-size: 0.85rem; color: #666;">${item.desc}</p>
@@ -1161,10 +1171,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 로그아웃 버튼
-    document.getElementById('logoutButton').addEventListener('click', () => {
-        localStorage.removeItem('loggedInUser');
-        window.location.href = 'index.html';
-    });
+    const logoutBtn = document.getElementById('logoutButton');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => {
+            localStorage.removeItem('loggedInUser');
+            window.location.href = 'index.html';
+        });
+    }
 
     // 챗봇 전송 이벤트
     const chatInput = document.getElementById('chatInput');
