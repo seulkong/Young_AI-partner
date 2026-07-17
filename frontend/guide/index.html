@@ -13,11 +13,14 @@
         <h2>📑 목차</h2>
         <ul>
             <li><a href="#intro">1. 서비스 소개</a></li>
-            <li><a href="#onboarding">2. 시작하기 및 맞춤형 설문</a></li>
-            <li><a href="#chatbot">3. 대시보드 및 플로팅 챗봇</a></li>
-            <li><a href="#chat-manual">4. 챗봇 대응 멘트 매뉴얼</a></li>
-            <li><a href="#keywords">5. 소비 스타일별 추천 키워드</a></li>
-            <li><a href="#flowchart">6. 전체 서비스 플로우 차트</a></li>
+            <li><a href="#tech-stack">2. 기술 스택 및 아키텍처</a></li>
+            <li><a href="#ai-orchestration">3. AI 네이티브 멀티 모델 오케스트레이션</a></li>
+            <li><a href="#onboarding">4. 시작하기 및 맞춤형 설문</a></li>
+            <li><a href="#chatbot">5. 대시보드 및 플로팅 챗봇</a></li>
+            <li><a href="#chat-manual">6. 챗봇 대응 멘트 매뉴얼</a></li>
+            <li><a href="#keywords">7. 소비 스타일별 추천 키워드</a></li>
+            <li><a href="#payments">8. 간편결제 X 편의점 더블 혜택</a></li>
+            <li><a href="#flowchart">9. 전체 서비스 플로우 차트</a></li>
         </ul>
     </nav>
 
@@ -35,8 +38,39 @@
             <p>저희 서비스는 단순한 가격 비교 서비스가 아니라, 다양한 상품행사와 제휴혜택이 있는 편의점을 중심으로 <strong>대학생의 소비 스타일과 결제 수단 및 보유 중인 할인혜택 데이터들을 복합적으로 고려해 가장 합리적인 구매 방법을 추천</strong>해 주는 'AI 기반 소비 파트너' 서비스입니다.</p>
         </section>
 
+        <section id="tech-stack">
+            <h2>2. 기술 스택 및 아키텍처</h2>
+            <p><strong>YOUNG리한 파트너</strong>는 빠른 응답 속도와 안정적인 데이터 처리를 위해 현대적인 웹 기술 스택을 활용하여 구축되었습니다.</p>
+            <ul>
+                <li><strong>Frontend:</strong> HTML5, CSS3, Vanilla JavaScript를 활용하여 직관적이고 경량화된 UI를 구현했습니다.</li>
+                <li><strong>Backend:</strong> <code>FastAPI</code>를 활용하여 비동기 기반의 빠르고 안정적인 API 서버를 구축했습니다. (단일 진입점을 통한 확장성 확보)</li>
+                <li><strong>Data Processing:</strong> <code>Python (Pandas, BeautifulSoup)</code>을 이용한 자동화된 웹 크롤링 파이프라인으로 편의점 최신 행사 데이터를 수집 및 가공합니다.</li>
+                <li><strong>AI Engine:</strong> 각기 다른 강점을 가진 3종의 LLM(OpenAI, Anthropic, Google) SDK를 통합 연동하여 강력한 추론 엔진을 구성했습니다.</li>
+            </ul>
+        </section>
+
+        <section id="ai-orchestration">
+            <h2>3. AI 네이티브 멀티 모델 오케스트레이션</h2>
+            <p>본 서비스는 단순한 챗봇을 넘어, 단 한 번의 사용자 질문으로 세 가지 AI 모델이 각자의 특화된 역할을 수행하는 <strong>릴레이 오케스트레이션(Relay Orchestration) 파이프라인</strong>을 구현한 진정한 AI 네이티브(AI-Native) 결과물입니다.</p>
+            
+            <div class="example-box">
+                <h3 style="margin-top: 0; color: #4361ee;">Step 1. 의도 분석 (Google Gemini 1.5 Flash)</h3>
+                <p>사용자의 질문이 백엔드에 도착하면 가장 먼저 응답 속도가 빠르고 맥락 이해가 뛰어난 <strong>Gemini</strong> 모델이 라우팅을 담당합니다. 사용자의 질문 속에서 숨은 의도와 제약 조건(단골 매장, 통신사, 결제 수단 등)을 빠르게 분석하고 분류합니다.</p>
+            </div>
+            
+            <div class="example-box" style="margin-top: 1rem;">
+                <h3 style="margin-top: 0; color: #8b5cf6;">Step 2. 연산 및 기획 (Anthropic Claude 3.5 Sonnet)</h3>
+                <p>수리적 논리와 추론 능력이 뛰어난 <strong>Claude</strong> 모델이 Gemini의 분석 결과를 넘겨받습니다. 1+1, 2+1 등 복잡한 조건식 연산에서 발생할 수 있는 할루시네이션(계산 오류)을 방지하며, 할인율과 예산을 바탕으로 가장 가성비 높은 최적의 장바구니 조합 초안을 도출합니다.</p>
+            </div>
+            
+            <div class="example-box" style="margin-top: 1rem;">
+                <h3 style="margin-top: 0; color: #10b981;">Step 3. 최종 포맷팅 (OpenAI GPT-4o)</h3>
+                <p>마지막으로 <strong>GPT-4o</strong> 모델이 Claude의 초안을 다듬어 가독성과 톤앤매너를 끌어올립니다. 'YOUNG리한 파트너'만의 친근하고 트렌디한 페르소나를 입혀 사용자가 한눈에 읽기 편한 깔끔한 마크다운(Markdown) 형태로 최종 답변을 화면에 출력합니다.</p>
+            </div>
+        </section>
+
         <section id="onboarding">
-            <h2>2. 시작하기 및 맞춤형 설문</h2>
+            <h2>4. 시작하기 및 맞춤형 설문</h2>
             <p>서비스에 처음 접속하면 다음과 같은 설문을 통해 사용자 맞춤형 추천 환경을 구성합니다.</p>
             
             <h3>사용자 이름 및 소비 스타일 선택</h3>
@@ -53,7 +87,7 @@
         </section>
 
         <section id="chatbot">
-            <h2>3. 대시보드 및 플로팅 챗봇</h2>
+            <h2>5. 대시보드 및 플로팅 챗봇</h2>
             
             <h3>새로워진 대시보드 화면</h3>
             <p>기존의 챗봇 중심 화면에서 벗어나, 이제 <strong>맞춤형 큐레이션, 근처 편의점 지도, 내 소비 리포트</strong>를 한눈에 볼 수 있는 대시보드 형태로 개편되었습니다.</p>
@@ -79,7 +113,7 @@
         </section>
 
         <section id="chat-manual">
-            <h2>4. 챗봇 대응 멘트 매뉴얼</h2>
+            <h2>6. 챗봇 대응 멘트 매뉴얼</h2>
 
             <h3>단일 상품 매칭 (특정 상품명 입력)</h3>
             <p>할인혜택(편의점 행사, 통신사, 카드, 간편결제)을 역산출하여 <strong>최종 혜택가</strong>를 알려줍니다. 특히 사용자가 '단골 매장'을 등록했다면 해당 매장을 기준으로 우선 안내합니다.</p>
@@ -100,7 +134,7 @@
         </section>
 
         <section id="keywords">
-            <h2>5. 소비 스타일별 추천 키워드</h2>
+            <h2>7. 소비 스타일별 추천 키워드</h2>
             <p>챗봇이 상품을 자동 추천할 때 사용하는 키워드 리스트입니다.</p>
             
             <p><strong>💪 헬스/건강:</strong> 
@@ -118,7 +152,7 @@
         </section>
 
         <section id="payments">
-            <h2>6. 간편결제 X 편의점 더블 혜택</h2>
+            <h2>8. 간편결제 X 편의점 더블 혜택</h2>
             <p>특정 편의점과 결제수단을 조합하면 상상 이상의 엄청난 혜택을 받을 수 있습니다.</p>
             
             <div class="example-box">
@@ -143,7 +177,7 @@
         </section>
 
         <section id="flowchart">
-            <h2>7. 전체 서비스 플로우 차트</h2>
+            <h2>9. 전체 서비스 플로우 차트</h2>
             <p>YOUNG리한 파트너의 서비스 작동 과정을 단계별로 한눈에 확인해 보세요.</p>
             <p class="zoom-hint">💡 각 다이어그램을 클릭하면 확대해서 볼 수 있습니다.</p>
             
