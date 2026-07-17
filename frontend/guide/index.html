@@ -57,10 +57,10 @@
             <div class="mermaid-container">
                 <div class="mermaid">
 graph LR
-    User(["🙋‍♂️ 사용자 질문<br>(단일 프롬프트)"]) --> G["🤖 Step 1<br>Google Gemini<br>(의도 분석 및 라우팅)"]
-    G -- "분석 결과 전달" --> C["🧠 Step 2<br>Anthropic Claude<br>(할인 연산 및 초안 기획)"]
-    C -- "초안 데이터 전달" --> O["✨ Step 3<br>OpenAI GPT-4o<br>(페르소나 적용 및 포맷팅)"]
-    O --> Result(["💡 최종 챗봇 화면 출력"])
+    User(["사용자 질문<br>(단일 프롬프트)"]) --> G["Step 1<br>Google Gemini<br>(의도 분석 및 라우팅)"]
+    G -- "분석 결과 전달" --> C["Step 2<br>Anthropic Claude<br>(할인 연산 및 초안 기획)"]
+    C -- "초안 데이터 전달" --> O["Step 3<br>OpenAI GPT-4o<br>(페르소나 적용 및 포맷팅)"]
+    O --> Result(["최종 챗봇 화면 출력"])
     
     style G fill:#4361ee,stroke:#fff,stroke-width:2px,color:#fff
     style C fill:#8b5cf6,stroke:#fff,stroke-width:2px,color:#fff
