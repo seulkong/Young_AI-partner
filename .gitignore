@@ -14,3 +14,7 @@ test_*.py
 test_*.html
 test_*.js
 fetch.py
+
+.dev.vars*
+!.dev.vars.example
+!.env.example
