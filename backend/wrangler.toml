@@ -1,5 +1,5 @@
 name = "young-ai-budget-mate-api"
-main = "backend/api_server.js"
+main = "api_server.js"
 compatibility_date = "2024-04-03"
 
 # D1 데이터베이스 설정 (회원 정보용)

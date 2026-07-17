@@ -5,3 +5,11 @@ requests # 웹페이지 요청
 beautifulsoup4 # 웹페이지 파싱
 pandas # 데이터 정제 및 분석용
 SQLAlchemy # 데이터베이스 연동
+
+# FastAPI & AI Orchestration Dependencies
+fastapi
+uvicorn
+python-dotenv
+openai
+anthropic
+google-generativeai
